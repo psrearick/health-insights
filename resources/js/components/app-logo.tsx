@@ -14,7 +14,7 @@ export default function AppLogo({ size = 'md', bg = 'sidebar' }: { size?: 'sm' |
             </div>
             <div className={`flex flex-1 text-left ${sizeClasses[size].fontSize}`}>
                 <span className="mb-0.5 truncate leading-tight font-bold text-primary">Health</span>
-                <span className="mb-0.5 truncate leading-tight text-primary-muted">Insights</span>
+                <span className="mb-0.5 truncate leading-tight text-primary-darker dark:text-primary-lighter">Insights</span>
             </div>
         </div>
     );
