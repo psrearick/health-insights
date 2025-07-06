@@ -21,12 +21,9 @@ jobs:
           - 3306/tcp
         env:
           MYSQL_ROOT_PASSWORD: password
-          MYSQL_ROOT_HOST: '%'
           MYSQL_DATABASE: health-insights
-          MYSQL_USER: root
-          MYSQL_PASSWORD: password
           MYSQL_ALLOW_EMPTY_PASSWORD: false
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="mysqladmin ping -h localhost" --health-interval=10s --health-timeout=5s --health-retries=3
 
       redis:
         image: redis
