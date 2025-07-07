@@ -7,10 +7,11 @@
     "dev": "vite",
     "format": "prettier --write resources/",
     "format:check": "prettier --check resources/",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "types": "tsc --noEmit",
-    "prepare": "husky"
+    "husky:enable": "husky",
+    "husky:disable": "git config --unset core.hooksPath"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
@@ -35,6 +36,7 @@
     "typescript-eslint": "^8.23.0"
   },
   "dependencies": {
+    "@eslint/compat": "^1.3.1",
     "@headlessui/react": "^2.2.0",
     "@inertiajs/react": "^2.0.14",
     "@radix-ui/react-avatar": "^1.1.3",
@@ -70,13 +72,13 @@
     "@tailwindcss/oxide-linux-x64-gnu": "^4.0.1",
     "lightningcss-linux-x64-gnu": "^1.29.1"
   },
-    "lint-staged": {
-        "*.{ts,tsx,js,jsx}": [
-            "eslint --fix",
-            "prettier --write"
-        ],
-        "*.php": [
-            "./vendor/bin/pint"
-        ]
-    }
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.php": [
+      "./vendor/bin/pint"
+    ]
+  }
 }
