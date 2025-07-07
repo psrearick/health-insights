@@ -3,11 +3,15 @@
     "singleQuote": true,
     "singleAttributePerLine": false,
     "htmlWhitespaceSensitivity": "css",
-    "printWidth": 150,
+    "printWidth": 80,
+    "useTabs": false,
+    "bracketSpacing": true,
+    "arrowParens": "avoid",
     "plugins": ["prettier-plugin-organize-imports", "prettier-plugin-tailwindcss"],
     "tailwindFunctions": ["clsx", "cn"],
     "tailwindStylesheet": "resources/css/app.css",
-    "tabWidth": 4,
+    "tabWidth": 2,
+    "trailingComma": "es5",
     "overrides": [
         {
             "files": "**/*.yml",
