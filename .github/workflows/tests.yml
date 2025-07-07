@@ -72,8 +72,8 @@ jobs:
       - name: Setup Environment File
         run: cp .env.testing .env
 
-      - name: Generate Application Key
-        run: php artisan key:generate
+      # - name: Generate Application Key
+      #   run: php artisan key:generate
 
       - name: Clear Caches
         run: |
@@ -89,6 +89,7 @@ jobs:
       - name: Run Migration
         run: php artisan migrate --force -v
         env:
+          APP_KEY: 'base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
           DB_DATABASE: testing
           DB_PORT: ${{ job.services.mariadb.ports['3306'] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
@@ -96,6 +97,7 @@ jobs:
       - name: Tests
         run: ./vendor/bin/pest
         env:
+          APP_KEY: 'base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
           DB_DATABASE: testing
           DB_PORT: ${{ job.services.mariadb.ports['3306'] }}
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
