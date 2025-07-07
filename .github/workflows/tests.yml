@@ -23,7 +23,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: health-insights
           MYSQL_ALLOW_EMPTY_PASSWORD: false
-          options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
       redis:
         image: redis
@@ -80,6 +80,12 @@ jobs:
 
       - name: Run Migration
         run: php artisan migrate -v
+        env:
+          DB_PORT: ${{ job.services.mariadb.ports[3306] }}
+          REDIS_PORT: ${{ job.services.redis.ports[6379] }}
 
       - name: Tests
         run: ./vendor/bin/pest
+        env:
+          DB_PORT: ${{ job.services.mariadb.ports[3306] }}
+          REDIS_PORT: ${{ job.services.redis.ports[6379] }}
