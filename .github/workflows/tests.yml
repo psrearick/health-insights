@@ -14,20 +14,35 @@ jobs:
   ci:
     runs-on: ubuntu-latest
 
+    # Define all environment variables for the job here
+    env:
+      DB_CONNECTION: mysql
+      DB_HOST: 127.0.0.1
+      DB_PORT: ${{ job.services.mariadb.ports['3306'] }}
+      DB_DATABASE: testing
+      DB_USERNAME: root
+      DB_PASSWORD: password
+      REDIS_HOST: 127.0.0.1
+      REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
+      APP_KEY: base64:dummykeyfortestingpurposes12345= # Add a dummy key
+
     services:
       mariadb:
         image: mariadb:11
         ports:
           - 3306/tcp
         env:
-          MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: testing
+          MYSQL_ROOT_PASSWORD: ${{ env.DB_PASSWORD }}
+          MYSQL_DATABASE: ${{ env.DB_DATABASE }}
           MYSQL_ALLOW_EMPTY_PASSWORD: false
+        # We can remove health checks; the wait step is more reliable
+        # options: --health-cmd="mysqladmin ping -h 127.0.0.1 -u root -p${{ env.DB_PASSWORD }}" --health-interval=5s --health-timeout=5s --health-retries=10
 
       redis:
         image: redis
         ports:
           - 6379/tcp
+        # options: --health-cmd="redis-cli ping" --health-interval=5s --health-timeout=5s --health-retries=5
 
     steps:
       - name: Checkout
@@ -39,7 +54,7 @@ jobs:
           php-version: 8.4
           tools: composer:v2
           coverage: xdebug
-          extensions: mysql
+          extensions: mysql, redis # Add redis extension
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -67,28 +82,23 @@ jobs:
       - name: Install Dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
-      - name: Copy Environment File
-        run: cp .env.testing .env
+      # We don't need .env files anymore since we set variables at the job level
+      # - name: Copy Environment File
+      #   run: cp .env.testing .env
+      # - name: Generate Application Key
+      #   run: php artisan key:generate
 
-      - name: Generate Application Key
-        run: php artisan key:generate
-
-      - name: Clear Config
-        run: php artisan config:clear
-
-      - name: Wait for services
+      - name: Clear caches
         run: |
-          echo "Waiting for services to be ready..."
-          sleep 10
+          php artisan config:clear
+          php artisan route:clear
+          php artisan view:clear
+
+      - name: Wait for Services
+        run: sleep 15
 
       - name: Run Migration
-        run: php artisan migrate -v
-        env:
-          DB_PORT: ${{ job.services.mariadb.ports[3306] }}
-          REDIS_PORT: ${{ job.services.redis.ports[6379] }}
+        run: php artisan migrate --force -v
 
       - name: Tests
         run: ./vendor/bin/pest
-        env:
-          DB_PORT: ${{ job.services.mariadb.ports[3306] }}
-          REDIS_PORT: ${{ job.services.redis.ports[6379] }}
