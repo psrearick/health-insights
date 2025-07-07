@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -26,30 +27,44 @@ class ProfileController extends Controller
 
     /**
      * Update the user's profile settings.
+     *
+     * @throws AuthenticationException
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if (! $user) {
+            throw new AuthenticationException;
         }
 
-        $request->user()->save();
+        $user->fill($request->validated());
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
 
         return to_route('profile.edit');
     }
 
     /**
      * Delete the user's account.
+     *
+     * @throws AuthenticationException
      */
     public function destroy(Request $request): RedirectResponse
     {
+        $user = $request->user();
+
+        if (! $user) {
+            throw new AuthenticationException;
+        }
+
         $request->validate([
             'password' => ['required', 'current_password'],
         ]);
-
-        $user = $request->user();
 
         Auth::logout();
 
