@@ -23,13 +23,11 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: testing
           MYSQL_ALLOW_EMPTY_PASSWORD: false
-        # options: --health-cmd="mysqladmin ping -h 127.0.0.1 -u root -ppassword" --health-interval=10s --health-timeout=5s --health-retries=3
 
       redis:
         image: redis
         ports:
           - 6379/tcp
-        # options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout
@@ -71,9 +69,6 @@ jobs:
 
       - name: Setup Environment File
         run: cp .env.testing .env
-
-      # - name: Generate Application Key
-      #   run: php artisan key:generate
 
       - name: Clear Caches
         run: |
