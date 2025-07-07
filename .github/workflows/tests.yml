@@ -23,13 +23,11 @@ jobs:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: health-insights
           MYSQL_ALLOW_EMPTY_PASSWORD: false
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
       redis:
         image: redis
         ports:
           - 6379/tcp
-        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout
@@ -77,6 +75,11 @@ jobs:
 
       - name: Clear Config
         run: php artisan config:clear
+
+      - name: Wait for services
+        run: |
+          echo "Waiting for services to be ready..."
+          sleep 10
 
       - name: Run Migration
         run: php artisan migrate -v
