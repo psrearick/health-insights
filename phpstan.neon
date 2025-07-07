@@ -1,7 +1,6 @@
 includes:
     - vendor/larastan/larastan/extension.neon
     - vendor/nesbot/carbon/extension.neon
-    - vendor/phpstan/phpstan-strict-rules/rules.neon
 
 parameters:
 
@@ -10,10 +9,10 @@ parameters:
 
     level: 8
 
-    ignoreErrors:
-        - '#PHPDoc tag @var#'
+    # ignoreErrors:
+    #     - '#PHPDoc tag @var#'
 
-    excludePaths:
-        - ./vendor/*
-        - ./storage/*
-        - ./bootstrap/cache/*
+    # excludePaths:
+    #     - ./vendor/*
+    #     - ./storage/*
+    #     - ./bootstrap/cache/*

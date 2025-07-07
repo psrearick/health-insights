@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -22,15 +23,23 @@ class PasswordController extends Controller
 
     /**
      * Update the user's password.
+     *
+     * @throws AuthenticationException
      */
     public function update(Request $request): RedirectResponse
     {
+        $user = $request->user();
+
+        if (! $user) {
+            throw new AuthenticationException;
+        }
+
         $validated = $request->validate([
             'current_password' => ['required', 'current_password'],
             'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
 
-        $request->user()->update([
+        $user->update([
             'password' => Hash::make($validated['password']),
         ]);
 

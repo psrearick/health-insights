@@ -12,7 +12,9 @@ test('profile page is displayed', function () {
     $response->assertOk();
 });
 
-test('profile information can be updated', function () {
+test(/**
+ * @throws JsonException
+ */ 'profile information can be updated', function () {
     $user = User::factory()->create();
 
     $response = $this
@@ -28,12 +30,14 @@ test('profile information can be updated', function () {
 
     $user->refresh();
 
-    expect($user->name)->toBe('Test User');
-    expect($user->email)->toBe('test@example.com');
-    expect($user->email_verified_at)->toBeNull();
+    expect($user->name)->toBe('Test User')
+        ->and($user->email)->toBe('test@example.com')
+        ->and($user->email_verified_at)->toBeNull();
 });
 
-test('email verification status is unchanged when the email address is unchanged', function () {
+test(/**
+ * @throws JsonException
+ */ 'email verification status is unchanged when the email address is unchanged', function () {
     $user = User::factory()->create();
 
     $response = $this
@@ -50,7 +54,9 @@ test('email verification status is unchanged when the email address is unchanged
     expect($user->refresh()->email_verified_at)->not->toBeNull();
 });
 
-test('user can delete their account', function () {
+test(/**
+ * @throws JsonException
+ */ 'user can delete their account', function () {
     $user = User::factory()->create();
 
     $response = $this
