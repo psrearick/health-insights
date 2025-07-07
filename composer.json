@@ -24,10 +24,8 @@
         "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
-        "nunomaduro/phpinsights": "^2.13",
         "pestphp/pest": "^3.8",
         "pestphp/pest-plugin-laravel": "^3.2",
-        "phpmd/phpmd": "^2.15",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-strict-rules": "^2.0",
         "rector/rector": "^2.1"
@@ -77,19 +75,16 @@
         "pint:check": "./vendor/bin/pint --test",
         "phpstan": "./vendor/bin/phpstan analyse --memory-limit=2G --configuration=phpstan.neon",
         "phpstan:baseline": "./vendor/bin/phpstan analyse --generate-baseline --memory-limit=2G --configuration=phpstan.neon",
-        "phpmd": "./vendor/bin/phpmd app text phpmd.xml",
         "rector": "./vendor/bin/rector process",
         "rector:dry": "./vendor/bin/rector process --dry-run",
         "code:check": [
             "@pint:check",
-            "@phpstan",
-            "@phpmd"
+            "@phpstan"
         ],
         "code:fix": [
             "@pint",
             "@rector"
-        ],
-        "insights": "phpinsights"
+        ]
     },
     "extra": {
         "laravel": {
