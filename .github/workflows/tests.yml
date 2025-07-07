@@ -21,7 +21,7 @@ jobs:
           - 3306/tcp
         env:
           MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: health-insights
+          MYSQL_DATABASE: testing
           MYSQL_ALLOW_EMPTY_PASSWORD: false
 
       redis:
