@@ -1,11 +1,9 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/react-starter-kit",
+    "name": "psrearick/health-insights",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Health Insight Dashboard",
     "keywords": [
-        "laravel",
-        "framework"
     ],
     "license": "MIT",
     "require": {
