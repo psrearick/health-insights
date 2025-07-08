@@ -21,7 +21,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         $user = $this->user();
 
-        if (!$user) {
+        if (! $user) {
             throw new AuthenticationException;
         }
 
