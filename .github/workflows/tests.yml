@@ -22,12 +22,15 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: testing
+          MYSQL_USER: root
           MYSQL_ALLOW_EMPTY_PASSWORD: false
+        options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
 
       redis:
         image: redis
         ports:
           - 6379/tcp
+        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout
@@ -44,8 +47,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'npm'
+          node-version: "22"
+          cache: "npm"
 
       - name: Install Node Dependencies
         run: npm ci
@@ -70,6 +73,9 @@ jobs:
       - name: Setup Environment File
         run: cp .env.testing .env
 
+      - name: Generate Application Key
+        run: php artisan key:generate
+
       - name: Clear Caches
         run: |
           php artisan config:clear
@@ -84,15 +90,23 @@ jobs:
       - name: Run Migration
         run: php artisan migrate --force -v
         env:
-          APP_KEY: 'base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
+          APP_KEY: "base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+          DB_HOST: 127.0.0.1
           DB_DATABASE: testing
+          DB_USERNAME: root
+          DB_PASSWORD: password
           DB_PORT: ${{ job.services.mariadb.ports['3306'] }}
+          REDIS_HOST: 127.0.0.1
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
 
       - name: Tests
         run: ./vendor/bin/pest
         env:
-          APP_KEY: 'base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
+          APP_KEY: "base64:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+          DB_HOST: 127.0.0.1
           DB_DATABASE: testing
+          DB_USERNAME: root
+          DB_PASSWORD: password
           DB_PORT: ${{ job.services.mariadb.ports['3306'] }}
+          REDIS_HOST: 127.0.0.1
           REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
