@@ -45,10 +45,10 @@ export function AppSidebar() {
             <SidebarMenuButton
               size="lg"
               asChild
-              className="hover:bg-sidebar-secondary"
+              className="group-data-[collapsible=icon]:justify-center hover:bg-inherit"
             >
               <Link href={route('dashboard')} prefetch>
-                <Logo />
+                <Logo className="group-data-[collapsible=icon]:[&>div:first-child]:size-6 group-data-[collapsible=icon]:[&>div:last-child]:hidden" />
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

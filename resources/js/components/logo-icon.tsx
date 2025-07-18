@@ -5,7 +5,7 @@ import { SVGAttributes } from 'react';
 const logoIconVariants = cva('fill-current', {
   variants: {
     variant: {
-      default: 'text-primary',
+      default: 'text-primary-5',
       grayscale: 'text-foreground',
     },
     size: {

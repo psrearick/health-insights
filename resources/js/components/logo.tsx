@@ -40,18 +40,15 @@ type logoType = ComponentProps<'div'> &
 
 export default function Logo({ className, size, ...props }: logoType) {
   return (
-    <div
-      className={cn('flex items-center text-sidebar-primary', className)}
-      {...props}
-    >
+    <div className={cn('flex items-center', className)} {...props}>
       <div className={cn(logoIconVariants({ size }))}>
         <LogoIcon size="inherit" />
       </div>
       <div className={cn(logoTextVariants({ size }))}>
-        <span className="mb-0.5 truncate leading-tight font-bold text-primary">
+        <span className="mb-0.5 truncate leading-tight font-bold text-primary-5">
           Health
         </span>
-        <span className="mb-0.5 truncate leading-tight text-primary-darker dark:text-primary-lighter">
+        <span className="mb-0.5 truncate leading-tight text-primary-9">
           Insights
         </span>
       </div>

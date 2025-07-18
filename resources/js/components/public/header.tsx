@@ -15,7 +15,7 @@ export default function Header() {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuLink to="home">
+            <NavigationMenuLink to="home" indicator={false}>
               <LogoIcon />
             </NavigationMenuLink>
           </NavigationMenuItem>

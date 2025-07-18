@@ -9,7 +9,7 @@ export default function Home() {
           <div className="flex items-center justify-center py-8">
             <Logo size="lg" />
           </div>
-          <div className="flex-1 rounded-lg border border-muted-foreground bg-background p-6 pb-12 text-sm leading-5 text-foreground lg:p-20">
+          <div className="flex-1 rounded-lg border border-foreground p-6 pb-12 text-sm leading-5 lg:p-20">
             <h1 className="mb-1 font-medium">Let's get started</h1>
           </div>
         </main>

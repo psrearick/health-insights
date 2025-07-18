@@ -60,7 +60,7 @@ function NavigationMenuItem({
         <NavigationMenuPrimitive.Item
             data-slot="navigation-menu-item"
             ref={ref}
-            className={cn('relative', className)}
+            className={className}
             {...props}
         />
     );
@@ -70,6 +70,7 @@ interface NavigationMenuLinkProps extends ComponentPropsWithRef<typeof Navigatio
     to: UrlOptions | string,
     isActive?: boolean;
     children?: ReactNode;
+    indicator?: boolean;
     className?: string;
 }
 
@@ -79,6 +80,7 @@ function NavigationMenuLink(
         children,
         to,
         isActive,
+        indicator = true,
         ref,
         ...props
     }: NavigationMenuLinkProps) {
@@ -89,8 +91,14 @@ function NavigationMenuLink(
 
     return (
         <NavigationMenuPrimitive.Link asChild active={active} ref={ref}  {...props}>
-            <Link href={href} className={className}>
+            <Link
+                href={href}
+                className={cn('relative hover:text-primary data-active:text-primary', className)}
+            >
                 {children}
+                {indicator && active && (
+                    <div className="w-full h-0.5 bg-primary" />
+                )}
             </Link>
         </NavigationMenuPrimitive.Link>
     );
