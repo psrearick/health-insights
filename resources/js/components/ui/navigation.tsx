@@ -1,19 +1,29 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu';
-import { ComponentProps, ReactNode } from 'react';
+import { ComponentPropsWithRef, ReactNode } from 'react';
 import { cn } from '@/lib/utils.ts';
 import { UrlOptions } from '@/types';
 import { resolveUrl, useIsCurrentRoute } from '@/lib/url.ts';
 import { Link } from '@inertiajs/react';
 
+const {
+    Trigger,
+    Sub,
+    Indicator,
+    Content,
+    Viewport
+} = NavigationMenuPrimitive;
+
 function NavigationMenu({
                             className,
                             children,
+                            ref,
                             ...props
-                        }: ComponentProps<typeof NavigationMenuPrimitive.Root>) {
+                        }: ComponentPropsWithRef<typeof NavigationMenuPrimitive.Root>) {
     return (
         <NavigationMenuPrimitive.Root
+            ref={ref}
             className={cn(
-                'flex items-center gap-4',
+                'flex items-center gap-4 w-full my-0 mx-auto max-w-xs lg:max-w-4xl justify-between',
                 className
             )}
             {...props}
@@ -25,10 +35,12 @@ function NavigationMenu({
 
 function NavigationMenuList({
                                 className,
+                                ref,
                                 ...props
-                            }: ComponentProps<typeof NavigationMenuPrimitive.List>) {
+                            }: ComponentPropsWithRef<typeof NavigationMenuPrimitive.List>) {
     return (
         <NavigationMenuPrimitive.List
+            ref={ref}
             data-slot="navigation-menu-list"
             className={cn(
                 'my-4 group flex flex-1 list-none items-center justify-center gap-6',
@@ -41,18 +53,20 @@ function NavigationMenuList({
 
 function NavigationMenuItem({
                                 className,
+                                ref,
                                 ...props
-                            }: ComponentProps<typeof NavigationMenuPrimitive.Item>) {
+                            }: ComponentPropsWithRef<typeof NavigationMenuPrimitive.Item>) {
     return (
         <NavigationMenuPrimitive.Item
             data-slot="navigation-menu-item"
+            ref={ref}
             className={cn('relative', className)}
             {...props}
         />
     );
 }
 
-interface NavigationMenuLinkProps extends ComponentProps<typeof NavigationMenuPrimitive.Link> {
+interface NavigationMenuLinkProps extends ComponentPropsWithRef<typeof NavigationMenuPrimitive.Link> {
     to: UrlOptions | string,
     isActive?: boolean;
     children?: ReactNode;
@@ -65,6 +79,7 @@ function NavigationMenuLink(
         children,
         to,
         isActive,
+        ref,
         ...props
     }: NavigationMenuLinkProps) {
     const href = resolveUrl(to);
@@ -73,7 +88,7 @@ function NavigationMenuLink(
     const active = isActive || isActiveUrl;
 
     return (
-        <NavigationMenuPrimitive.Link asChild active={active}  {...props}>
+        <NavigationMenuPrimitive.Link asChild active={active} ref={ref}  {...props}>
             <Link href={href} className={className}>
                 {children}
             </Link>
@@ -81,10 +96,14 @@ function NavigationMenuLink(
     );
 }
 
-
 export {
     NavigationMenu,
     NavigationMenuList,
     NavigationMenuItem,
-    NavigationMenuLink
+    NavigationMenuLink,
+    Trigger as NavigationMenuTrigger,
+    Sub as NavigationMenuSub,
+    Indicator as NavigationMenuIndicator,
+    Content as NavigationMenuContent,
+    Viewport as NavigationMenuViewport
 };
