@@ -1,4 +1,4 @@
-import LogoIcon from '@/components/logo-icon.tsx';
+import { LogoIcon } from '@/components/logo-icon.tsx';
 import { Link } from '@inertiajs/react';
 import { X } from 'lucide-react';
 import { type PropsWithChildren } from 'react';
@@ -32,9 +32,7 @@ export default function AuthLayout({
                 href={route('home')}
                 className="flex flex-col items-center gap-2 font-medium"
               >
-                <div className="mb-1 flex h-9 w-9 items-center justify-center rounded-md">
-                  <LogoIcon className="size-9 fill-primary text-primary" />
-                </div>
+                <LogoIcon size="md" className="mb-2" />
                 <span className="sr-only">{title}</span>
               </Link>
 

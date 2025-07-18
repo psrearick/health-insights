@@ -1,4 +1,4 @@
-import LogoIcon from '@/components/logo-icon.tsx';
+import { LogoIcon } from '@/components/logo-icon.tsx';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -16,7 +16,7 @@ export default function Header() {
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuLink to="home">
-              <LogoIcon className="h-6 w-6 fill-current text-primary" />
+              <LogoIcon />
             </NavigationMenuLink>
           </NavigationMenuItem>
           <NavigationMenuItem>

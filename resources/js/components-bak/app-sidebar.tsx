@@ -47,7 +47,7 @@ export function AppSidebar() {
               asChild
               className="hover:bg-sidebar-secondary"
             >
-              <Link href="/dashboard" prefetch>
+              <Link href={route('dashboard')} prefetch>
                 <Logo />
               </Link>
             </SidebarMenuButton>

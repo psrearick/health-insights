@@ -4,34 +4,6 @@ import PublicLayout from '@/layouts/public-layout.tsx';
 export default function Home() {
   return (
     <PublicLayout title="Home">
-      {/*<div>*/}
-      {/*<header className="mb-6 w-full max-w-xs text-sm not-has-[nav]:hidden lg:max-w-4xl">*/}
-      {/*    <nav className="flex items-center justify-end gap-4">*/}
-      {/*        {auth.user ? (*/}
-      {/*            <Link*/}
-      {/*                href={route('dashboard')}*/}
-      {/*                className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"*/}
-      {/*            >*/}
-      {/*                Dashboard*/}
-      {/*            </Link>*/}
-      {/*        ) : (*/}
-      {/*            <>*/}
-      {/*                <Link*/}
-      {/*                    href={route('login')}*/}
-      {/*                    className="inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-foreground hover:border-primary"*/}
-      {/*                >*/}
-      {/*                    Log in*/}
-      {/*                </Link>*/}
-      {/*                <Link*/}
-      {/*                    href={route('register')}*/}
-      {/*                    className="inline-block rounded-sm border border-foreground px-5 py-1.5 text-sm leading-normal text-foreground hover:border-primary"*/}
-      {/*                >*/}
-      {/*                    Register*/}
-      {/*                </Link>*/}
-      {/*            </>*/}
-      {/*        )}*/}
-      {/*    </nav>*/}
-      {/*</header>*/}
       <div className="flex flex-1 items-center justify-center opacity-100 transition-opacity duration-750 starting:opacity-0">
         <main className="w-full max-w-xs lg:max-w-4xl lg:flex-row">
           <div className="flex items-center justify-center py-8">
@@ -43,7 +15,6 @@ export default function Home() {
         </main>
       </div>
       <div className="hidden h-48 lg:block"></div>
-      {/*</div>*/}
     </PublicLayout>
   );
 }

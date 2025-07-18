@@ -36,7 +36,7 @@ import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
 import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-react';
-import LogoIcon from '../components/logo-icon.tsx';
+import { LogoIcon } from '../components/logo-icon.tsx';
 import Logo from '../components/logo.tsx';
 
 const mainNavItems: NavItem[] = [
@@ -93,7 +93,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
               >
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 <SheetHeader className="flex justify-start text-left">
-                  <LogoIcon className="h-6 w-6 fill-current text-black dark:text-white" />
+                  <LogoIcon className="fill-current text-black dark:text-white" />
                 </SheetHeader>
                 <div className="flex h-full flex-1 flex-col space-y-4 p-4">
                   <div className="flex h-full flex-col justify-between text-sm">
@@ -135,7 +135,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
           </div>
 
           <Link
-            href="/dashboard"
+            href={route('dashboard')}
             prefetch
             className="flex items-center space-x-2"
           >

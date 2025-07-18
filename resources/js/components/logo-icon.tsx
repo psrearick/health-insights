@@ -1,6 +1,33 @@
+import { cn } from '@/lib/utils.ts';
+import { cva, VariantProps } from 'class-variance-authority';
 import { SVGAttributes } from 'react';
 
-export default function LogoIcon(props: SVGAttributes<SVGElement>) {
+const logoIconVariants = cva('fill-current', {
+  variants: {
+    variant: {
+      default: 'text-primary',
+      grayscale: 'text-foreground',
+    },
+    size: {
+      default: 'size-6',
+      inherit: '',
+      sm: 'size-6',
+      md: 'size-12',
+      lg: 'size-20',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+    size: 'default',
+  },
+});
+
+function LogoIcon({
+  className,
+  variant,
+  size,
+  ...props
+}: SVGAttributes<SVGElement> & VariantProps<typeof logoIconVariants>) {
   return (
     <>
       <svg
@@ -12,6 +39,7 @@ export default function LogoIcon(props: SVGAttributes<SVGElement>) {
           strokeMiterlimit: 2,
           stroke: 'currentColor',
         }}
+        className={cn(logoIconVariants({ variant, size, className }))}
         {...props}
       >
         <g>
@@ -55,3 +83,5 @@ export default function LogoIcon(props: SVGAttributes<SVGElement>) {
     </>
   );
 }
+
+export { LogoIcon, logoIconVariants };
