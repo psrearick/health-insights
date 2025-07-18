@@ -1,6 +1,8 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu';
 import { ComponentProps, ReactNode } from 'react';
 import { cn } from '@/lib/utils.ts';
+import { UrlOptions } from '@/types';
+import { resolveUrl, useIsCurrentRoute } from '@/lib/url.ts';
 import { Link } from '@inertiajs/react';
 
 function NavigationMenu({
@@ -51,9 +53,7 @@ function NavigationMenuItem({
 }
 
 interface NavigationMenuLinkProps extends ComponentProps<typeof NavigationMenuPrimitive.Link> {
-    target?: string;
-    targetParams?: object | string | number;
-    href: string;
+    to: UrlOptions | string,
     isActive?: boolean;
     children?: ReactNode;
     className?: string;
@@ -63,27 +63,18 @@ function NavigationMenuLink(
     {
         className,
         children,
-        target,
-        targetParams,
-        href,
+        to,
         isActive,
         ...props
     }: NavigationMenuLinkProps) {
+    const href = resolveUrl(to);
+    const isActiveUrl = useIsCurrentRoute(to, { exact: false });
 
-    const currentRoute = route().current() ?? '';
-    const currentHref = route(currentRoute);
-    const targetHref = target ? targetParams ? route(target, targetParams) : route(target) : href;
-
-    // let link = href ? href : route(route().current());
-    // console.log(target, route(route().current()));
-    // // isActive = isActive ?
-    //
-    //
-    // // const active = isActive || route().current(target);
+    const active = isActive || isActiveUrl;
 
     return (
-        <NavigationMenuPrimitive.Link asChild active={isActive}  {...props}>
-            <Link href={link} className={className}>
+        <NavigationMenuPrimitive.Link asChild active={active}  {...props}>
+            <Link href={href} className={className}>
                 {children}
             </Link>
         </NavigationMenuPrimitive.Link>

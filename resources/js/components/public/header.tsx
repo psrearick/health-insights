@@ -17,12 +17,12 @@ export default function Header() {
             <NavigationMenu className="w-full my-0 mx-auto max-w-xs lg:max-w-4xl justify-between">
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                        <NavigationMenuLink target={'home'}>
+                        <NavigationMenuLink to="home">
                             <LogoIcon className="h-6 w-6 fill-current text-primary" />
                         </NavigationMenuLink>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                        <NavigationMenuLink target={'home'}>
+                        <NavigationMenuLink to="/">
                             Home
                         </NavigationMenuLink>
                     </NavigationMenuItem>
@@ -37,12 +37,12 @@ export default function Header() {
                 ) : (
                     <NavigationMenuList>
                         <NavigationMenuItem>
-                            <NavigationMenuLink target="login">
+                            <NavigationMenuLink to="login">
                                 Log In
                             </NavigationMenuLink>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
-                            <NavigationMenuLink target="register">
+                            <NavigationMenuLink to="register">
                                 Register
                             </NavigationMenuLink>
                         </NavigationMenuItem>
