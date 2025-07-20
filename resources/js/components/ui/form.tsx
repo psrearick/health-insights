@@ -1,4 +1,13 @@
-import { Children, isValidElement, ComponentPropsWithRef, ReactNode, cloneElement, ReactElement } from 'react';
+import {
+    Children,
+    isValidElement,
+    ComponentPropsWithRef,
+    ReactNode,
+    cloneElement,
+    ReactElement,
+    HTMLAttributes,
+    ChangeEvent
+} from 'react';
 import {
     unstable_PasswordToggleField as PasswordToggleFieldPrimitive,
     Label as LabelPrimitive,
@@ -104,7 +113,7 @@ function FormControl({
     });
 
     return (
-        <Comp className={cn('flex flex-col gap-2', className)} {...props}>
+        <Comp className={cn('flex flex-col gap-1', className)} {...props}>
             {enhancedChildren}
         </Comp>
     );
@@ -146,6 +155,8 @@ interface FormPasswordInputProps extends ComponentPropsWithRef<typeof PasswordTo
     tabIndex: number;
     placeholder?: string;
     name?: string;
+    required?: boolean;
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 function FormPasswordInput({
@@ -155,7 +166,9 @@ function FormPasswordInput({
                                iconClassName,
                                tabIndex = -1,
                                placeholder = 'Password',
+                               required = false,
                                name,
+                               onChange,
                                ...props
                            }: FormPasswordInputProps) {
     return (
@@ -169,6 +182,8 @@ function FormPasswordInput({
                     className={cn('focus:outline-0 w-full placeholder:text-gray-7', inputClassName)}
                     tabIndex={tabIndex}
                     placeholder={placeholder}
+                    onChange={onChange}
+                    required={required}
                 />
                 <PasswordToggleFieldPrimitive.Toggle id={`"${name}_toggle"`}
                                                      className={cn('group-focus-within:text-primary focus:outline-0 focus:text-primary-9 hover:text-primary-9', toggleClassName)}>
@@ -255,6 +270,25 @@ function FormCheckbox({
     );
 }
 
+interface FormInputErrorProps extends HTMLAttributes<HTMLParagraphElement> {
+    message?: string;
+}
+
+function FormInputError({
+                            message,
+                            className = '',
+                            ...props
+                        }: FormInputErrorProps) {
+    return (
+        <p
+            {...props}
+            className={cn('text-sm text-destructive-foreground', className)}
+        >
+            {message}
+        </p>
+    );
+}
+
 export {
     FormContainer,
     FormFieldset,
@@ -263,6 +297,7 @@ export {
     FormPasswordInput,
     FormTextArea,
     FormInput,
-    FormCheckbox
+    FormCheckbox,
+    FormInputError
 
 };

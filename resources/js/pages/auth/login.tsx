@@ -1,142 +1,139 @@
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
 import { Button } from '@/components-bak/ui/button';
-import AuthLayout from '@/layouts/auth-layout';
 import {
-    FormContainer,
-    FormControl,
-    FormFieldset,
-    FormLabel,
-    FormInput,
-    FormPasswordInput,
-    FormCheckbox
+  FormCheckbox,
+  FormContainer,
+  FormControl,
+  FormFieldset,
+  FormInput,
+  FormInputError,
+  FormLabel,
+  FormPasswordInput,
 } from '@/components/ui/form.tsx';
 import TextLink from '@/components/ui/text-link.tsx';
+import AuthLayout from '@/layouts/auth-layout';
 
 type LoginForm = {
-    email: string;
-    password: string;
-    remember: boolean;
+  email: string;
+  password: string;
+  remember: boolean;
 };
 
 interface LoginProps {
-    status?: string;
-    canResetPassword: boolean;
+  status?: string;
+  canResetPassword: boolean;
 }
 
 export default function Login({ status, canResetPassword }: LoginProps) {
-    const { data, setData, post, processing, errors, reset } = useForm<
-        Required<LoginForm>
-    >({
-        email: '',
-        password: '',
-        remember: false
+  const { data, setData, post, processing, errors, reset } = useForm<
+    Required<LoginForm>
+  >({
+    email: '',
+    password: '',
+    remember: false,
+  });
+
+  const submit: FormEventHandler = e => {
+    e.preventDefault();
+    post(route('login'), {
+      onFinish: () => reset('password'),
     });
+  };
 
-    const submit: FormEventHandler = e => {
-        e.preventDefault();
-        post(route('login'), {
-            onFinish: () => reset('password')
-        });
-    };
+  return (
+    <AuthLayout
+      title="Log in to your account"
+      description="Enter your email and password below to log in"
+    >
+      <Head title="Log in" />
 
-    return (
-        <AuthLayout
-            title="Log in to your account"
-            description="Enter your email and password below to log in"
-        >
-            <Head title="Log in" />
+      <FormContainer onSubmit={submit}>
+        <FormFieldset className="my-4">
+          <FormControl name="email" className="">
+            <FormLabel>Email Address</FormLabel>
+            <FormInput
+              autoComplete="email"
+              type="email"
+              placeholder="email@example.com"
+              autoFocus
+              required
+              tabIndex={1}
+              value={data.email}
+              onChange={e => setData('email', e.target.value)}
+            />
+            <FormInputError message={errors.email} />
+          </FormControl>
 
-            <FormContainer>
-                <FormFieldset>
-                    <FormControl name="email" className="">
-                        <FormLabel>Email Address</FormLabel>
-                        <FormInput
-                            autoComplete="email"
-                            type="email"
-                            placeholder="email@example.com"
-                            autoFocus
-                            required
-                            tabIndex={1}
-                        />
-                    </FormControl>
-                    {/*<Input*/}
-                    {/*    value={data.email}*/}
-                    {/*    onChange={e => setData('email', e.target.value)}*/}
-                    {/*/>*/}
-                    {/*<InputError message={errors.email} />*/}
-
-
-                    <FormControl name="password">
-                        <FormLabel>
-                            <div className="flex items-center">
-                                <FormLabel htmlFor="password"
-                                           className="w-full flex items-center justify-between">
-                                    <span>Password</span>
-                                    {canResetPassword && (
-                                        <TextLink
-                                            href={route('password.request')}
-                                            tabIndex={6}
-                                            className="text-sm"
-                                        >
-                                            Forgot Password?
-                                        </TextLink>
-                                    )}
-                                </FormLabel>
-                            </div>
-                        </FormLabel>
-                        <FormPasswordInput tabIndex={2} placeholder="Password" />
-                    </FormControl>
-                    {/*<Input*/}
-                    {/*    required*/}
-                    {/*    value={data.password}*/}
-                    {/*    onChange={e => setData('password', e.target.value)}*/}
-                    {/*    placeholder="Password"*/}
-                    {/*/>*/}
-                    {/*<InputError message={errors.password} />*/}
-
-                    <FormControl name="remember">
-                        <div className="flex items-center gap-4">
-                            <FormCheckbox
-                                id="remember"
-                                name="remember"
-                                checked={data.remember}
-                                onClick={() => setData('remember', !data.remember)}
-                                tabIndex={4}
-                            />
-                            <FormLabel htmlFor="remember">Remember me</FormLabel>
-                        </div>
-
-                    </FormControl>
-
-
-                </FormFieldset>
-
-                <Button
-                    type="submit"
-                    className="mt-4 w-full"
-                    tabIndex={5}
-                    disabled={processing}
+          <FormControl name="password">
+            <FormLabel>
+              <div className="flex items-center">
+                <FormLabel
+                  htmlFor="password"
+                  className="flex w-full items-center justify-between"
                 >
-                    {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-                    Log in
-                </Button>
-
-                <div className="text-center text-sm text-muted-foreground">
-                    Don't have an account?{' '}
-                    <TextLink href={route('register')} tabIndex={7}>
-                        Sign up
+                  <span>Password</span>
+                  {canResetPassword && (
+                    <TextLink
+                      href={route('password.request')}
+                      tabIndex={6}
+                      className="text-sm"
+                    >
+                      Forgot Password?
                     </TextLink>
-                </div>
-            </FormContainer>
+                  )}
+                </FormLabel>
+              </div>
+            </FormLabel>
+            <FormPasswordInput
+              required
+              tabIndex={2}
+              placeholder="Password"
+              onChange={e => setData('password', e.target.value)}
+            />
+            <FormInputError message={errors.password} />
+          </FormControl>
 
-            {status && (
-                <div className="mb-4 text-center text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
-        </AuthLayout>
-    );
+          <FormControl name="remember">
+            <div className="flex items-center gap-4">
+              <FormCheckbox
+                id="remember"
+                name="remember"
+                checked={data.remember}
+                onClick={() => setData('remember', !data.remember)}
+                tabIndex={4}
+              />
+              <FormLabel htmlFor="remember">Remember me</FormLabel>
+              <FormInputError message={errors.remember} />
+            </div>
+          </FormControl>
+        </FormFieldset>
+
+        <Button
+          type="submit"
+          className="my-4 w-full"
+          tabIndex={5}
+          disabled={processing}
+        >
+          {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+          Log in
+        </Button>
+
+        <div className="text-center text-sm text-muted-foreground">
+          Don't have an account?{' '}
+          <TextLink href={route('register')} tabIndex={7}>
+            Sign up
+          </TextLink>
+        </div>
+      </FormContainer>
+
+      {status && (
+        <div className="mb-4 text-center text-sm font-medium text-primary-6">
+          {status}
+        </div>
+      )}
+    </AuthLayout>
+  );
 }
