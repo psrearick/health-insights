@@ -1,10 +1,12 @@
 import { Children, isValidElement, ComponentPropsWithRef, ReactNode, cloneElement, ReactElement } from 'react';
 import {
     unstable_PasswordToggleField as PasswordToggleFieldPrimitive,
-    Label as LabelPrimitive
+    Label as LabelPrimitive,
+    Checkbox as CheckboxPrimitive
 } from 'radix-ui';
-import { EyeClosedIcon, EyeOpenIcon } from '@radix-ui/react-icons';
+import { CheckIcon, Eye, EyeClosed } from 'lucide-react';
 import { Slot } from '@radix-ui/react-slot';
+import { cn } from '@/lib/utils.ts';
 
 function FormContainer({
                            className,
@@ -41,7 +43,7 @@ function FormFieldset({
     return (
         <Comp
             ref={ref}
-            className={className}
+            className={cn('flex flex-col gap-8', className)}
             {...props}
         >
             {children}
@@ -49,7 +51,7 @@ function FormFieldset({
     );
 }
 
-interface FormControlProps extends ComponentPropsWithRef<'p'> {
+interface FormControlProps extends ComponentPropsWithRef<'div'> {
     name: string;
     children: ReactNode;
     asChild?: boolean;
@@ -63,7 +65,7 @@ function FormControl({
                          className,
                          ...props
                      }: FormControlProps) {
-    const Comp = asChild ? Slot : 'p';
+    const Comp = asChild ? Slot : 'div';
 
     const enhancedChildren = Children.map(children, (child: ReactNode) => {
         if (isValidElement(child)) {
@@ -71,7 +73,7 @@ function FormControl({
 
             const isFormField =
                 child.type === FormInput ||
-                child.type === typeof FormPasswordInput ||
+                child.type === FormPasswordInput ||
                 child.type === FormTextArea ||
                 (typeof child.type === 'string' && ['input', 'textarea', 'select'].includes(child.type)) ||
                 (childProps && typeof childProps === 'object' && 'data-form-field' in childProps);
@@ -102,7 +104,7 @@ function FormControl({
     });
 
     return (
-        <Comp className={className} {...props}>
+        <Comp className={cn('flex flex-col gap-2', className)} {...props}>
             {enhancedChildren}
         </Comp>
     );
@@ -118,7 +120,7 @@ function FormLabel({
     return (
         <LabelPrimitive.Root
             ref={ref}
-            className={className}
+            className={cn('text-sm', className)}
             htmlFor={htmlFor}
             {...props}
         >
@@ -127,35 +129,53 @@ function FormLabel({
     );
 }
 
+const inputClasses = cn(
+    'border border-gray-6 outline-none',
+    'focus-within:border-primary focus-within:border-ring focus-within:ring-3 focus-within:ring-primary/50',
+    'px-3 py-1 h-10 my-1 w-full rounded-md',
+    'selection:bg-primary selection:text-primary-foreground placeholder:text-gray-7 md:text-sm',
+    'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',
+    'aria-invalid:border-destructive aria-invalid:ring-destructive/20'
+);
+
 interface FormPasswordInputProps extends ComponentPropsWithRef<typeof PasswordToggleFieldPrimitive.PasswordToggleField> {
     className?: string;
     inputClassName?: string;
     toggleClassName?: string;
     iconClassName?: string;
+    tabIndex: number;
+    placeholder?: string;
     name?: string;
 }
 
 function FormPasswordInput({
-                               className,
-                               inputClassName,
-                               toggleClassName,
+                               className = '',
+                               inputClassName = '',
+                               toggleClassName = '',
                                iconClassName,
+                               tabIndex = -1,
+                               placeholder = 'Password',
                                name,
                                ...props
                            }: FormPasswordInputProps) {
     return (
         <PasswordToggleFieldPrimitive.PasswordToggleField
-            id={name}
             {...props}
         >
-            <div className={className}>
-                <FormLabel htmlFor={name}>Password</FormLabel>
-                <PasswordToggleFieldPrimitive.Input className={inputClassName} />
-                <PasswordToggleFieldPrimitive.Toggle className={toggleClassName}>
+            <div className={cn(inputClasses, 'flex justify-between group', className)}>
+                <PasswordToggleFieldPrimitive.Input
+                    name={name}
+                    id={name}
+                    className={cn('focus:outline-0 w-full placeholder:text-gray-7', inputClassName)}
+                    tabIndex={tabIndex}
+                    placeholder={placeholder}
+                />
+                <PasswordToggleFieldPrimitive.Toggle id={`"${name}_toggle"`}
+                                                     className={cn('group-focus-within:text-primary focus:outline-0 focus:text-primary-9 hover:text-primary-9', toggleClassName)}>
                     <PasswordToggleFieldPrimitive.Icon
                         className={iconClassName}
-                        visible={<EyeOpenIcon />}
-                        hidden={<EyeClosedIcon />}
+                        visible={<Eye className="h-4" />}
+                        hidden={<EyeClosed className="h-4" />}
                     />
                 </PasswordToggleFieldPrimitive.Toggle>
             </div>
@@ -183,7 +203,7 @@ function FormInput(
             data-form-field
             name={name}
             id={id}
-            className={className}
+            className={cn(inputClasses, className)}
             placeholder={placeholder}
             {...props}
         />
@@ -209,10 +229,29 @@ function FormTextArea({
             data-form-field
             name={name}
             id={id}
-            className={className}
+            className={cn(inputClasses, className)}
             placeholder={placeholder}
             {...props}
         />
+    );
+}
+
+function FormCheckbox({
+                          className, ...props
+                      }: ComponentPropsWithRef<typeof CheckboxPrimitive.Root>) {
+    return (
+        <CheckboxPrimitive.Root
+            data-slot="checkbox"
+            className={cn(inputClasses, 'w-auto size-4.5 m-0 p-0 rounded-sm', className)}
+            {...props}
+        >
+            <CheckboxPrimitive.Indicator
+                data-slot="checkbox-indicator"
+                className="flex items-center justify-center text-current"
+            >
+                <CheckIcon className="size-3.5" />
+            </CheckboxPrimitive.Indicator>
+        </CheckboxPrimitive.Root>
     );
 }
 
@@ -223,6 +262,7 @@ export {
     FormLabel,
     FormPasswordInput,
     FormTextArea,
-    FormInput
+    FormInput,
+    FormCheckbox
 
 };
