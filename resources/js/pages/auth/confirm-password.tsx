@@ -1,12 +1,14 @@
-// Components
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
-import InputError from '@/components-bak/input-error';
-import { Button } from '@/components-bak/ui/button';
-import { Input } from '@/components-bak/ui/input';
-import { Label } from '@/components-bak/ui/label';
+import Button from '@/components/ui/button';
+import {
+  FormContainer,
+  FormField,
+  FormFieldset,
+  FormPasswordInput,
+} from '@/components/ui/form';
 import AuthLayout from '@/layouts/auth-layout';
 
 export default function ConfirmPassword() {
@@ -31,32 +33,29 @@ export default function ConfirmPassword() {
     >
       <Head title="Confirm password" />
 
-      <form onSubmit={submit}>
-        <div className="space-y-6">
-          <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              name="password"
+      <FormContainer onSubmit={submit}>
+        <FormFieldset className="my-4">
+          <FormField
+            name="password"
+            label="Password"
+            error={errors.password}
+            required
+          >
+            <FormPasswordInput
               placeholder="Password"
               autoComplete="current-password"
               value={data.password}
               autoFocus
               onChange={e => setData('password', e.target.value)}
             />
+          </FormField>
+        </FormFieldset>
 
-            <InputError message={errors.password} />
-          </div>
-
-          <div className="flex items-center">
-            <Button className="w-full" disabled={processing}>
-              {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-              Confirm password
-            </Button>
-          </div>
-        </div>
-      </form>
+        <Button type="submit" className="my-4 w-full" disabled={processing}>
+          {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+          Confirm password
+        </Button>
+      </FormContainer>
     </AuthLayout>
   );
 }

@@ -202,6 +202,7 @@ interface FormPasswordInputProps {
     value?: string;
     disabled?: boolean;
     autoComplete?: 'current-password' | 'new-password';
+    autoFocus?: boolean;
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
     onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
     onFocus?: (e: FocusEvent<HTMLInputElement>) => void;
@@ -222,6 +223,7 @@ const FormPasswordInput = memo(function FormPasswordInput({
                                                               value,
                                                               disabled: propDisabled,
                                                               autoComplete,
+                                                              autoFocus,
                                                               onChange,
                                                               onBlur,
                                                               onFocus,
@@ -246,6 +248,7 @@ const FormPasswordInput = memo(function FormPasswordInput({
                     required={required}
                     disabled={isDisabled}
                     autoComplete={autoComplete}
+                    autoFocus={autoFocus}
                     aria-invalid={ariaInvalid}
                     aria-describedby={ariaDescribedBy}
                 />
