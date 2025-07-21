@@ -22,7 +22,7 @@
     --color-popover-foreground: var(--color-foreground);
 
     --color-primary: var(--color-primary-6);
-    --color-primary-foreground: var(--color-primary-1);
+    --color-primary-foreground: var(--color-black);
     --color-primary-accent: var(--color-primary-5);
     --color-primary-accent-foreground: var(--color-primary-1);
 
@@ -32,27 +32,27 @@
     --color-secondary: var(--secondary);
     --color-secondary-foreground: var(--color-foreground);
 
-    --color-muted: var(--muted);
-    --color-muted-foreground: var(--color-foreground);
+    --color-muted: var(--color-gray-4);
+    --color-muted-foreground: var(--color-gray-6);
 
-    --color-accent: var(--muted);
+    --color-accent: var(--color-gray-4);
     --color-accent-foreground: var(--color-foreground);
 
-    --color-destructive: var(--destructive);
-    --color-destructive-foreground: var(--destructive-foreground);
+    --color-destructive: var(--color-destructive);
+    --color-destructive-foreground: var(--color-destructive-foreground);
+    --color-destructive-accent: var(--color-destructive-accent);
+    --color-destructive-accent-foreground: var(--color-destructive-accent-foreground);
 
-    --color-border: var(--border);
-    --color-input: var(--input);
-    --color-ring: var(--color-primary);
+    --color-border: var(--color-gray-4);
+    --color-input: var(--color-gray-10);
 
     --color-sidebar: var(--color-gray-2);
     --color-sidebar-foreground: var(--color-foreground);
-    /*--color-sidebar-primary: var(--primary);*/
-    --color-sidebar-secondary: var(--muted);
-    --color-sidebar-accent: var(--muted);
+    --color-sidebar-secondary: var(--color-gray-4);
+    --color-sidebar-accent: var(--color-gray-4);
     --color-sidebar-accent-foreground: var(--color-foreground);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--color-gray-4);
+    --color-sidebar-ring: var(--color-gray-5);
 
     --color-gray-1: var(--color-gray-1);
     --color-gray-2: var(--color-gray-2);
@@ -77,6 +77,18 @@
     --color-primary-9: var(--color-primary-9);
     --color-primary-10: var(--color-primary-10);
     --color-primary-11: var(--color-primary-11);
+
+    --color-red-1: var(--color-red-1);
+    --color-red-2: var(--color-red-2);
+    --color-red-3: var(--color-red-3);
+    --color-red-4: var(--color-red-4);
+    --color-red-5: var(--color-red-5);
+    --color-red-6: var(--color-red-6);
+    --color-red-7: var(--color-red-7);
+    --color-red-8: var(--color-red-8);
+    --color-red-9: var(--color-red-9);
+    --color-red-10: var(--color-red-10);
+    --color-red-11: var(--color-red-11);
 }
 
 /*
@@ -98,15 +110,12 @@
 }
 
 :root {
-    --muted: #f2f2f2;
-    --destructive: #e7000b;
-    --destructive-foreground: #e7000b;
-    --border: #e5e5e5;
-    --input: #e5e5e5;
     --radius: 0.625rem;
-    --sidebar-accent: #f5f5f5;
-    --sidebar-border: #e5e5e5;
-    --sidebar-ring: #d4d4d4;
+
+    --color-destructive: var(--color-red-600);
+    --color-destructive-foreground: var(--color-white);
+    --color-destructive-accent: var(--color-red-500);
+    --color-destructive-accent-foreground: var(--color-black);
 
     --color-gray-1: var(--color-gray-50);
     --color-gray-2: var(--color-gray-100);
@@ -131,17 +140,25 @@
     --color-primary-9: var(--color-emerald-800);
     --color-primary-10: var(--color-emerald-900);
     --color-primary-11: var(--color-emerald-950);
+
+    --color-red-1: var(--color-red-50);
+    --color-red-2: var(--color-red-100);
+    --color-red-3: var(--color-red-200);
+    --color-red-4: var(--color-red-300);
+    --color-red-5: var(--color-red-400);
+    --color-red-6: var(--color-red-500);
+    --color-red-7: var(--color-red-600);
+    --color-red-8: var(--color-red-700);
+    --color-red-9: var(--color-red-800);
+    --color-red-10: var(--color-red-900);
+    --color-red-11: var(--color-red-950);
 }
 
 .dark {
-    --muted: #262626;
-    --destructive: #82181a;
-    --destructive-foreground: #fb2c36;
-    --border: #262626;
-    --input: #262626;
-    --sidebar-accent: #262626;
-    --sidebar-border: #262626;
-    --sidebar-ring: #525252;
+    --color-destructive: var(--color-red-500);
+    --color-destructive-foreground: var(--color-black);
+    --color-destructive-accent: var(--color-red-600);
+    --color-destructive-accent-foreground: var(--color-white);
 
     --color-gray-1: var(--color-gray-950);
     --color-gray-2: var(--color-gray-900);
@@ -166,6 +183,18 @@
     --color-primary-9: var(--color-emerald-200);
     --color-primary-10: var(--color-emerald-100);
     --color-primary-11: var(--color-emerald-50);
+
+    --color-red-1: var(--color-red-950);
+    --color-red-2: var(--color-red-900);
+    --color-red-3: var(--color-red-800);
+    --color-red-4: var(--color-red-700);
+    --color-red-5: var(--color-red-600);
+    --color-red-6: var(--color-red-500);
+    --color-red-7: var(--color-red-400);
+    --color-red-8: var(--color-red-300);
+    --color-red-9: var(--color-red-200);
+    --color-red-10: var(--color-red-100);
+    --color-red-11: var(--color-red-50);
 }
 
 @layer base {

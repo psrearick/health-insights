@@ -2,7 +2,7 @@ import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
-import { Button } from '@/components-bak/ui/button';
+import Button from '@/components/ui/button';
 import {
   FormCheckbox,
   FormContainer,

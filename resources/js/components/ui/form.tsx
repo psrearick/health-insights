@@ -1,7 +1,7 @@
 import {
     Children,
     isValidElement,
-    ComponentPropsWithRef,
+    ComponentProps,
     ReactNode,
     cloneElement,
     ReactElement,
@@ -22,7 +22,7 @@ function FormContainer({
                            children,
                            ref,
                            ...props
-                       }: ComponentPropsWithRef<'form'>) {
+                       }: ComponentProps<'form'>) {
     return (
         <form
             ref={ref}
@@ -34,7 +34,7 @@ function FormContainer({
     );
 }
 
-interface FormFieldsetProps extends ComponentPropsWithRef<'fieldset'> {
+interface FormFieldsetProps extends ComponentProps<'fieldset'> {
     children?: ReactNode;
     className?: string;
     legend?: string;
@@ -60,7 +60,7 @@ function FormFieldset({
     );
 }
 
-interface FormControlProps extends ComponentPropsWithRef<'div'> {
+interface FormControlProps extends ComponentProps<'div'> {
     name: string;
     children: ReactNode;
     asChild?: boolean;
@@ -125,7 +125,7 @@ function FormLabel({
                        className,
                        ref,
                        ...props
-                   }: ComponentPropsWithRef<typeof LabelPrimitive.Root>) {
+                   }: ComponentProps<typeof LabelPrimitive.Root>) {
     return (
         <LabelPrimitive.Root
             ref={ref}
@@ -140,14 +140,14 @@ function FormLabel({
 
 const inputClasses = cn(
     'border border-gray-6 outline-none',
-    'focus-within:border-primary focus-within:border-ring focus-within:ring-3 focus-within:ring-primary/50',
+    'focus-within:border-primary focus-within:ring-3 focus-within:ring-primary/50',
     'px-3 py-1 h-10 my-1 w-full rounded-md',
     'selection:bg-primary selection:text-primary-foreground placeholder:text-gray-7 md:text-sm',
     'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',
     'aria-invalid:border-destructive aria-invalid:ring-destructive/20'
 );
 
-interface FormPasswordInputProps extends ComponentPropsWithRef<typeof PasswordToggleFieldPrimitive.PasswordToggleField> {
+interface FormPasswordInputProps extends ComponentProps<typeof PasswordToggleFieldPrimitive.PasswordToggleField> {
     className?: string;
     inputClassName?: string;
     toggleClassName?: string;
@@ -198,7 +198,7 @@ function FormPasswordInput({
     );
 }
 
-interface FormInputProps extends ComponentPropsWithRef<'input'> {
+interface FormInputProps extends ComponentProps<'input'> {
     className?: string;
     name?: string;
     id?: string;
@@ -225,7 +225,7 @@ function FormInput(
     );
 }
 
-interface FormTextAreaProps extends ComponentPropsWithRef<'textarea'> {
+interface FormTextAreaProps extends ComponentProps<'textarea'> {
     className?: string;
     name?: string;
     id?: string;
@@ -253,7 +253,7 @@ function FormTextArea({
 
 function FormCheckbox({
                           className, ...props
-                      }: ComponentPropsWithRef<typeof CheckboxPrimitive.Root>) {
+                      }: ComponentProps<typeof CheckboxPrimitive.Root>) {
     return (
         <CheckboxPrimitive.Root
             data-slot="checkbox"

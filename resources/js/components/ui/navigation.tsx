@@ -1,5 +1,5 @@
 import * as NavigationMenuPrimitive from '@radix-ui/react-navigation-menu';
-import { ComponentPropsWithRef, ReactNode } from 'react';
+import { ComponentProps, ReactNode } from 'react';
 import { cn } from '@/lib/utils.ts';
 import { UrlOptions } from '@/types';
 import { resolveUrl, useIsCurrentRoute } from '@/lib/url.ts';
@@ -18,7 +18,7 @@ function NavigationMenu({
                             children,
                             ref,
                             ...props
-                        }: ComponentPropsWithRef<typeof NavigationMenuPrimitive.Root>) {
+                        }: ComponentProps<typeof NavigationMenuPrimitive.Root>) {
     return (
         <NavigationMenuPrimitive.Root
             ref={ref}
@@ -37,7 +37,7 @@ function NavigationMenuList({
                                 className,
                                 ref,
                                 ...props
-                            }: ComponentPropsWithRef<typeof NavigationMenuPrimitive.List>) {
+                            }: ComponentProps<typeof NavigationMenuPrimitive.List>) {
     return (
         <NavigationMenuPrimitive.List
             ref={ref}
@@ -55,7 +55,7 @@ function NavigationMenuItem({
                                 className,
                                 ref,
                                 ...props
-                            }: ComponentPropsWithRef<typeof NavigationMenuPrimitive.Item>) {
+                            }: ComponentProps<typeof NavigationMenuPrimitive.Item>) {
     return (
         <NavigationMenuPrimitive.Item
             data-slot="navigation-menu-item"
@@ -66,7 +66,7 @@ function NavigationMenuItem({
     );
 }
 
-interface NavigationMenuLinkProps extends ComponentPropsWithRef<typeof NavigationMenuPrimitive.Link> {
+interface NavigationMenuLinkProps extends ComponentProps<typeof NavigationMenuPrimitive.Link> {
     to: UrlOptions | string,
     isActive?: boolean;
     children?: ReactNode;
