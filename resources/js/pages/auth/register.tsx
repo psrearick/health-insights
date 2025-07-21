@@ -1,24 +1,16 @@
-import { Head, useForm } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler } from 'react';
-
-// import InputError from '@/components-bak/input-error';
-// import TextLink from '@/components-bak/text-link';
-// import { Button } from '@/components-bak/ui/button';
-// import { Input } from '@/components-bak/ui/input';
-// import { Label } from '@/components-bak/ui/label';
 import Button from '@/components/ui/button';
 import {
   FormContainer,
-  FormControl,
+  FormField,
   FormFieldset,
   FormInput,
-  FormInputError,
-  FormLabel,
   FormPasswordInput,
 } from '@/components/ui/form';
 import TextLink from '@/components/ui/text-link.tsx';
 import AuthLayout from '@/layouts/auth-layout';
+import { Head, useForm } from '@inertiajs/react';
+import { LoaderCircle } from 'lucide-react';
+import { FormEventHandler } from 'react';
 
 type RegisterForm = {
   name: string;
@@ -53,11 +45,9 @@ export default function Register() {
 
       <FormContainer onSubmit={submit}>
         <FormFieldset className="my-4">
-          <FormControl name="name">
-            <FormLabel>Name</FormLabel>
+          <FormField name="name" label="Name" error={errors.name} required>
             <FormInput
               autoComplete="name"
-              required
               autoFocus
               tabIndex={1}
               value={data.name}
@@ -65,14 +55,11 @@ export default function Register() {
               disabled={processing}
               placeholder="Full name"
             />
-            <FormInputError message={errors.name} />
-          </FormControl>
+          </FormField>
 
-          <FormControl name="email">
-            <FormLabel>Email</FormLabel>
+          <FormField name="email" label="Email" error={errors.email} required>
             <FormInput
-              inputType="email"
-              required
+              type="email"
               tabIndex={2}
               autoComplete="email"
               value={data.email}
@@ -80,36 +67,39 @@ export default function Register() {
               disabled={processing}
               placeholder="email@example.com"
             />
-            <FormInputError message={errors.email} />
-          </FormControl>
+          </FormField>
 
-          <FormControl name="password">
-            <FormLabel>Password</FormLabel>
+          <FormField
+            name="password"
+            label="Password"
+            error={errors.password}
+            required
+          >
             <FormPasswordInput
               tabIndex={3}
-              required
               autoComplete="new-password"
               value={data.password}
               onChange={e => setData('password', e.target.value)}
               disabled={processing}
               placeholder="Password"
             />
-            <FormInputError message={errors.password} />
-          </FormControl>
+          </FormField>
 
-          <FormControl name="password_confirmation">
-            <FormLabel>Confirm Password</FormLabel>
+          <FormField
+            name="password_confirmation"
+            label="Confirm Password"
+            error={errors.password_confirmation}
+            required
+          >
             <FormPasswordInput
               tabIndex={4}
-              required
               autoComplete="new-password"
               value={data.password_confirmation}
               onChange={e => setData('password_confirmation', e.target.value)}
               disabled={processing}
               placeholder="Confirm password"
             />
-            <FormInputError message={errors.password_confirmation} />
-          </FormControl>
+          </FormField>
         </FormFieldset>
 
         <Button

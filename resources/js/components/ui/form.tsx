@@ -1,12 +1,14 @@
 import {
-    Children,
-    isValidElement,
     ComponentProps,
     ReactNode,
     cloneElement,
     ReactElement,
     HTMLAttributes,
-    ChangeEvent
+    ChangeEvent,
+    FocusEvent,
+    createContext,
+    useContext,
+    memo
 } from 'react';
 import {
     unstable_PasswordToggleField as PasswordToggleFieldPrimitive,
@@ -17,20 +19,37 @@ import { CheckIcon, Eye, EyeClosed } from 'lucide-react';
 import { Slot } from '@radix-ui/react-slot';
 import { cn } from '@/lib/utils.ts';
 
+interface FormContextValue {
+    disabled?: boolean;
+}
+
+const FormContext = createContext<FormContextValue | undefined>(undefined);
+
+const useFormContext = () => {
+    return useContext(FormContext) || {};
+};
+
+interface FormContainerProps extends ComponentProps<'form'> {
+    disabled?: boolean;
+}
+
 function FormContainer({
                            className,
                            children,
+                           disabled,
                            ref,
                            ...props
-                       }: ComponentProps<'form'>) {
+                       }: FormContainerProps) {
     return (
-        <form
-            ref={ref}
-            className={className}
-            {...props}
-        >
-            {children}
-        </form>
+        <FormContext.Provider value={{ disabled }}>
+            <form
+                ref={ref}
+                className={className}
+                {...props}
+            >
+                {children}
+            </form>
+        </FormContext.Provider>
     );
 }
 
@@ -61,14 +80,12 @@ function FormFieldset({
 }
 
 interface FormControlProps extends ComponentProps<'div'> {
-    name: string;
     children: ReactNode;
     asChild?: boolean;
     className?: string;
 }
 
 function FormControl({
-                         name,
                          children,
                          asChild,
                          className,
@@ -76,46 +93,71 @@ function FormControl({
                      }: FormControlProps) {
     const Comp = asChild ? Slot : 'div';
 
-    const enhancedChildren = Children.map(children, (child: ReactNode) => {
-        if (isValidElement(child)) {
-            const childProps = child.props as Record<string, unknown>;
-
-            const isFormField =
-                child.type === FormInput ||
-                child.type === FormPasswordInput ||
-                child.type === FormTextArea ||
-                (typeof child.type === 'string' && ['input', 'textarea', 'select'].includes(child.type)) ||
-                (childProps && typeof childProps === 'object' && 'data-form-field' in childProps);
-
-            if (isFormField) {
-                const fieldElement = child as ReactElement<{ name?: string; id?: string }>;
-                return cloneElement(fieldElement, {
-                    ...fieldElement.props,
-                    name,
-                    id: name
-                });
-            }
-
-            const isLabel =
-                child.type === FormLabel ||
-                (typeof child.type === 'string' && child.type === 'label') ||
-                (childProps && typeof childProps === 'object' && 'data-form-label' in childProps);
-
-            if (isLabel) {
-                const labelElement = child as ReactElement<{ htmlFor?: string }>;
-                return cloneElement(labelElement, {
-                    ...labelElement.props,
-                    htmlFor: name
-                });
-            }
-        }
-        return child;
-    });
-
     return (
         <Comp className={cn('flex flex-col gap-1', className)} {...props}>
-            {enhancedChildren}
+            {children}
         </Comp>
+    );
+}
+
+interface FormFieldProps {
+    name: string;
+    label?: ReactNode;
+    error?: string;
+    required?: boolean;
+    children: ReactElement;
+    className?: string;
+    requiredIndicator?: ReactNode;
+}
+
+function FormField({
+                       name,
+                       label,
+                       error,
+                       required,
+                       children,
+                       className,
+                       requiredIndicator
+                   }: FormFieldProps) {
+    const fieldId = name;
+    const errorId = error ? `${name}-error` : undefined;
+
+    const defaultRequiredIndicator = <span className="text-destructive ml-1" aria-label="required">*</span>;
+
+    let labelElement = null;
+    if (label) {
+        if (typeof label === 'string' && required) {
+            labelElement = (
+                <FormLabel htmlFor={fieldId}>
+                    {label}
+                    {requiredIndicator || defaultRequiredIndicator}
+                </FormLabel>
+            );
+        } else {
+            labelElement = (
+                <FormLabel htmlFor={fieldId}>
+                    {label}
+                </FormLabel>
+            );
+        }
+    }
+
+    const fieldProps = {
+        id: fieldId,
+        name,
+        'aria-invalid': error ? 'true' : undefined,
+        'aria-describedby': errorId,
+        'aria-required': required
+    };
+
+    const fieldElement = cloneElement(children, fieldProps);
+
+    return (
+        <FormControl className={className}>
+            {labelElement}
+            {fieldElement}
+            <FormInputError id={errorId} message={error} />
+        </FormControl>
     );
 }
 
@@ -147,96 +189,129 @@ const inputClasses = cn(
     'aria-invalid:border-destructive aria-invalid:ring-destructive/20'
 );
 
-interface FormPasswordInputProps extends ComponentProps<typeof PasswordToggleFieldPrimitive.PasswordToggleField>,
-    ComponentProps<'input'> {
+interface FormPasswordInputProps {
     className?: string;
     inputClassName?: string;
     toggleClassName?: string;
     iconClassName?: string;
-    tabIndex: number;
+    tabIndex?: number;
     placeholder?: string;
+    id?: string;
     name?: string;
     required?: boolean;
     value?: string;
+    disabled?: boolean;
+    autoComplete?: 'current-password' | 'new-password';
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+    onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
+    onFocus?: (e: FocusEvent<HTMLInputElement>) => void;
+    'aria-invalid'?: boolean | 'true' | 'false' | 'grammar' | 'spelling';
+    'aria-describedby'?: string;
 }
 
-function FormPasswordInput({
-                               className = '',
-                               inputClassName = '',
-                               toggleClassName = '',
-                               iconClassName,
-                               tabIndex = -1,
-                               placeholder = 'Password',
-                               required = false,
-                               name,
-                               value,
-                               onChange,
-                               ...props
-                           }: FormPasswordInputProps) {
+const FormPasswordInput = memo(function FormPasswordInput({
+                                                              className = '',
+                                                              inputClassName = '',
+                                                              toggleClassName = '',
+                                                              iconClassName,
+                                                              tabIndex,
+                                                              placeholder = 'Password',
+                                                              required = false,
+                                                              id,
+                                                              name,
+                                                              value,
+                                                              disabled: propDisabled,
+                                                              autoComplete,
+                                                              onChange,
+                                                              onBlur,
+                                                              onFocus,
+                                                              'aria-invalid': ariaInvalid,
+                                                              'aria-describedby': ariaDescribedBy
+                                                          }: FormPasswordInputProps) {
+    const { disabled: contextDisabled } = useFormContext();
+    const isDisabled = propDisabled ?? contextDisabled;
     return (
-        <PasswordToggleFieldPrimitive.PasswordToggleField
-            {...props}
-        >
+        <PasswordToggleFieldPrimitive.PasswordToggleField>
             <div className={cn(inputClasses, 'flex justify-between group', className)}>
                 <PasswordToggleFieldPrimitive.Input
                     name={name}
-                    id={name}
+                    id={id || name}
                     className={cn('focus:outline-0 w-full placeholder:text-gray-7', inputClassName)}
                     tabIndex={tabIndex}
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
+                    onBlur={onBlur}
+                    onFocus={onFocus}
                     required={required}
+                    disabled={isDisabled}
+                    autoComplete={autoComplete}
+                    aria-invalid={ariaInvalid}
+                    aria-describedby={ariaDescribedBy}
                 />
-                <PasswordToggleFieldPrimitive.Toggle id={`"${name}_toggle"`}
-                                                     className={cn('group-focus-within:text-primary focus:outline-0 focus:text-primary-9 hover:text-primary-9', toggleClassName)}>
+                <PasswordToggleFieldPrimitive.Toggle
+                    id={`${name}_toggle`}
+                    className={cn('group-focus-within:text-primary focus:outline-0 focus:text-primary-9 hover:text-primary-9 focus:ring-2 focus:ring-primary/20 rounded-sm', toggleClassName)}
+                    aria-label="Toggle password visibility"
+                    tabIndex={0}
+                >
                     <PasswordToggleFieldPrimitive.Icon
                         className={iconClassName}
-                        visible={<Eye className="h-4" />}
-                        hidden={<EyeClosed className="h-4" />}
+                        visible={<Eye className="h-4" aria-hidden="true" />}
+                        hidden={<EyeClosed className="h-4" aria-hidden="true" />}
                     />
+                    <span className="sr-only">Toggle password visibility</span>
                 </PasswordToggleFieldPrimitive.Toggle>
             </div>
         </PasswordToggleFieldPrimitive.PasswordToggleField>
     );
-}
+});
 
 interface FormInputProps extends ComponentProps<'input'> {
     className?: string;
     name?: string;
     id?: string;
-    inputType?: string;
     placeholder?: string;
+    'aria-required'?: boolean;
+    'aria-invalid'?: boolean | 'true' | 'false' | 'grammar' | 'spelling';
+    'aria-describedby'?: string;
 }
 
-function FormInput(
+const FormInput = memo(function FormInput(
     {
         className,
         name,
         id,
-        inputType = 'text',
+        type = 'text',
         placeholder,
+        disabled: propDisabled,
         ...props
     }: FormInputProps) {
+    const { disabled: contextDisabled } = useFormContext();
+    const isDisabled = propDisabled ?? contextDisabled;
+
     return (
         <input
             data-form-field
             name={name}
             id={id}
-            type={inputType}
+            type={type}
             className={cn(inputClasses, className)}
             placeholder={placeholder}
+            disabled={isDisabled}
             {...props}
         />
     );
-}
+});
 
 interface FormTextAreaProps extends ComponentProps<'textarea'> {
     className?: string;
     name?: string;
     id?: string;
     placeholder?: string;
+    'aria-required'?: boolean;
+    'aria-invalid'?: boolean | 'true' | 'false' | 'grammar' | 'spelling';
+    'aria-describedby'?: string;
 }
 
 function FormTextArea({
@@ -279,17 +354,23 @@ function FormCheckbox({
 
 interface FormInputErrorProps extends HTMLAttributes<HTMLParagraphElement> {
     message?: string;
+    id?: string;
 }
 
 function FormInputError({
                             message,
                             className = '',
+                            id,
                             ...props
                         }: FormInputErrorProps) {
+    if (!message) return null;
+
     return (
         <p
             {...props}
+            id={id}
             className={cn('text-sm text-destructive', className)}
+            role="alert"
         >
             {message}
         </p>
@@ -300,11 +381,22 @@ export {
     FormContainer,
     FormFieldset,
     FormControl,
+    FormField,
     FormLabel,
     FormPasswordInput,
     FormTextArea,
     FormInput,
     FormCheckbox,
     FormInputError
+};
 
+export type {
+    FormContainerProps,
+    FormFieldsetProps,
+    FormControlProps,
+    FormFieldProps,
+    FormPasswordInputProps,
+    FormInputProps,
+    FormTextAreaProps,
+    FormInputErrorProps
 };

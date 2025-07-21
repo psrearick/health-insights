@@ -7,6 +7,7 @@ import {
   FormCheckbox,
   FormContainer,
   FormControl,
+  FormField,
   FormFieldset,
   FormInput,
   FormInputError,
@@ -52,54 +53,56 @@ export default function Login({ status, canResetPassword }: LoginProps) {
 
       <FormContainer onSubmit={submit}>
         <FormFieldset className="my-4">
-          <FormControl name="email" className="">
-            <FormLabel>Email Address</FormLabel>
+          <FormField
+            name="email"
+            label="Email Address"
+            error={errors.email}
+            required
+          >
             <FormInput
               autoComplete="email"
-              inputType="email"
+              type="email"
               placeholder="email@example.com"
               autoFocus
-              required
               tabIndex={1}
               value={data.email}
               onChange={e => setData('email', e.target.value)}
             />
-            <FormInputError message={errors.email} />
-          </FormControl>
+          </FormField>
 
-          <FormControl name="password">
-            <FormLabel>
-              <div className="flex items-center">
-                <FormLabel
-                  htmlFor="password"
-                  className="flex w-full items-center justify-between"
-                >
-                  <span>Password</span>
-                  {canResetPassword && (
-                    <div className="text-muted-foreground">
-                      <TextLink
-                        href={route('password.request')}
-                        tabIndex={6}
-                        className="text-sm"
-                      >
-                        Forgot Password?
-                      </TextLink>
-                    </div>
-                  )}
-                </FormLabel>
+          <FormField
+            name="password"
+            label={
+              <div className="flex w-full items-center justify-between">
+                <span>
+                  Password
+                  <span className="ml-1 text-destructive" aria-label="required">
+                    *
+                  </span>
+                </span>
+                {canResetPassword && (
+                  <TextLink
+                    href={route('password.request')}
+                    tabIndex={6}
+                    className="text-sm text-muted-foreground"
+                  >
+                    Forgot Password?
+                  </TextLink>
+                )}
               </div>
-            </FormLabel>
+            }
+            error={errors.password}
+            required
+          >
             <FormPasswordInput
-              required
               tabIndex={2}
               placeholder="Password"
               value={data.password}
               onChange={e => setData('password', e.target.value)}
             />
-            <FormInputError message={errors.password} />
-          </FormControl>
+          </FormField>
 
-          <FormControl name="remember">
+          <FormControl>
             <div className="flex items-center gap-4">
               <FormCheckbox
                 id="remember"
@@ -109,7 +112,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                 tabIndex={4}
               />
               <FormLabel htmlFor="remember">Remember me</FormLabel>
-              <FormInputError message={errors.remember} />
+              <FormInputError id="remember-error" message={errors.remember} />
             </div>
           </FormControl>
         </FormFieldset>
