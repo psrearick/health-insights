@@ -56,7 +56,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
             <FormLabel>Email Address</FormLabel>
             <FormInput
               autoComplete="email"
-              type="email"
+              inputType="email"
               placeholder="email@example.com"
               autoFocus
               required
@@ -76,13 +76,15 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                 >
                   <span>Password</span>
                   {canResetPassword && (
-                    <TextLink
-                      href={route('password.request')}
-                      tabIndex={6}
-                      className="text-sm"
-                    >
-                      Forgot Password?
-                    </TextLink>
+                    <div className="text-muted-foreground">
+                      <TextLink
+                        href={route('password.request')}
+                        tabIndex={6}
+                        className="text-sm"
+                      >
+                        Forgot Password?
+                      </TextLink>
+                    </div>
                   )}
                 </FormLabel>
               </div>
@@ -91,6 +93,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
               required
               tabIndex={2}
               placeholder="Password"
+              value={data.password}
               onChange={e => setData('password', e.target.value)}
             />
             <FormInputError message={errors.password} />

@@ -52,7 +52,7 @@ function FormFieldset({
     return (
         <Comp
             ref={ref}
-            className={cn('flex flex-col gap-8', className)}
+            className={cn('flex flex-col gap-4', className)}
             {...props}
         >
             {children}
@@ -147,7 +147,8 @@ const inputClasses = cn(
     'aria-invalid:border-destructive aria-invalid:ring-destructive/20'
 );
 
-interface FormPasswordInputProps extends ComponentProps<typeof PasswordToggleFieldPrimitive.PasswordToggleField> {
+interface FormPasswordInputProps extends ComponentProps<typeof PasswordToggleFieldPrimitive.PasswordToggleField>,
+    ComponentProps<'input'> {
     className?: string;
     inputClassName?: string;
     toggleClassName?: string;
@@ -156,6 +157,7 @@ interface FormPasswordInputProps extends ComponentProps<typeof PasswordToggleFie
     placeholder?: string;
     name?: string;
     required?: boolean;
+    value?: string;
     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -168,6 +170,7 @@ function FormPasswordInput({
                                placeholder = 'Password',
                                required = false,
                                name,
+                               value,
                                onChange,
                                ...props
                            }: FormPasswordInputProps) {
@@ -182,6 +185,7 @@ function FormPasswordInput({
                     className={cn('focus:outline-0 w-full placeholder:text-gray-7', inputClassName)}
                     tabIndex={tabIndex}
                     placeholder={placeholder}
+                    value={value}
                     onChange={onChange}
                     required={required}
                 />
@@ -202,6 +206,7 @@ interface FormInputProps extends ComponentProps<'input'> {
     className?: string;
     name?: string;
     id?: string;
+    inputType?: string;
     placeholder?: string;
 }
 
@@ -210,6 +215,7 @@ function FormInput(
         className,
         name,
         id,
+        inputType = 'text',
         placeholder,
         ...props
     }: FormInputProps) {
@@ -218,6 +224,7 @@ function FormInput(
             data-form-field
             name={name}
             id={id}
+            type={inputType}
             className={cn(inputClasses, className)}
             placeholder={placeholder}
             {...props}
@@ -282,7 +289,7 @@ function FormInputError({
     return (
         <p
             {...props}
-            className={cn('text-sm text-destructive-foreground', className)}
+            className={cn('text-sm text-destructive', className)}
         >
             {message}
         </p>
