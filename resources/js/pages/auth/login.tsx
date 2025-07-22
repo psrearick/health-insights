@@ -81,13 +81,15 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                   </span>
                 </span>
                 {canResetPassword && (
-                  <TextLink
-                    href={route('password.request')}
-                    tabIndex={6}
-                    className="text-sm text-muted-foreground"
-                  >
-                    Forgot Password?
-                  </TextLink>
+                  <span className="text-muted-foreground">
+                    <TextLink
+                      href={route('password.request')}
+                      tabIndex={6}
+                      className="text-sm"
+                    >
+                      Forgot Password?
+                    </TextLink>
+                  </span>
                 )}
               </div>
             }
