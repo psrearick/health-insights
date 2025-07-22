@@ -3,7 +3,7 @@ import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
 import Button from '@/components/ui/button';
-import { FormContainer } from '@/components/ui/form';
+import { Form } from '@/components/ui/form';
 import TextLink from '@/components/ui/text-link';
 import AuthLayout from '@/layouts/auth-layout';
 
@@ -30,7 +30,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
         </div>
       )}
 
-      <FormContainer onSubmit={submit} className="space-y-6 text-center">
+      <Form onSubmit={submit} className="space-y-6 text-center">
         <Button disabled={processing} variant="outline">
           {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
           Resend verification email
@@ -43,7 +43,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
         >
           Log out
         </TextLink>
-      </FormContainer>
+      </Form>
     </AuthLayout>
   );
 }

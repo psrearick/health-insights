@@ -1,6 +1,6 @@
 import Button from '@/components/ui/button';
 import {
-  FormContainer,
+  Form,
   FormField,
   FormFieldset,
   FormInput,
@@ -43,7 +43,7 @@ export default function Register() {
     >
       <Head title="Register" />
 
-      <FormContainer onSubmit={submit}>
+      <Form onSubmit={submit}>
         <FormFieldset className="my-4">
           <FormField name="name" label="Name" error={errors.name} required>
             <FormInput
@@ -118,7 +118,7 @@ export default function Register() {
             Log in
           </TextLink>
         </div>
-      </FormContainer>
+      </Form>
     </AuthLayout>
   );
 }

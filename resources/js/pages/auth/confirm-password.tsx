@@ -4,7 +4,7 @@ import { FormEventHandler } from 'react';
 
 import Button from '@/components/ui/button';
 import {
-  FormContainer,
+  Form,
   FormField,
   FormFieldset,
   FormPasswordInput,
@@ -33,7 +33,7 @@ export default function ConfirmPassword() {
     >
       <Head title="Confirm password" />
 
-      <FormContainer onSubmit={submit}>
+      <Form onSubmit={submit}>
         <FormFieldset className="my-4">
           <FormField
             name="password"
@@ -55,7 +55,7 @@ export default function ConfirmPassword() {
           {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
           Confirm password
         </Button>
-      </FormContainer>
+      </Form>
     </AuthLayout>
   );
 }

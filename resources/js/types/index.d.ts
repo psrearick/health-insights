@@ -43,14 +43,14 @@ export interface User {
   [key: string]: unknown; // This allows for additional properties...
 }
 
-interface UrlOptions {
+export interface UrlOptions {
   url?: string;
   name?: string;
   route?: string;
   params?: ParameterValue;
 }
 
-interface CurrentUrlOptions {
+export interface CurrentUrlOptions {
   exact?: boolean;
   current?: string;
 }

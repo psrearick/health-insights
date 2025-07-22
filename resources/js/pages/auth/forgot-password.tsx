@@ -3,12 +3,7 @@ import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
 
 import Button from '@/components/ui/button';
-import {
-  FormContainer,
-  FormField,
-  FormFieldset,
-  FormInput,
-} from '@/components/ui/form';
+import { Form, FormField, FormFieldset, FormInput } from '@/components/ui/form';
 import TextLink from '@/components/ui/text-link';
 import AuthLayout from '@/layouts/auth-layout';
 
@@ -38,7 +33,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
         </div>
       )}
 
-      <FormContainer onSubmit={submit}>
+      <Form onSubmit={submit}>
         <FormFieldset className="my-4">
           <FormField
             name="email"
@@ -66,7 +61,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
           <span>Or, return to</span>
           <TextLink href={route('login')}>log in</TextLink>
         </div>
-      </FormContainer>
+      </Form>
     </AuthLayout>
   );
 }

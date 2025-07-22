@@ -4,7 +4,7 @@ import { FormEventHandler } from 'react';
 
 import Button from '@/components/ui/button';
 import {
-  FormContainer,
+  Form,
   FormField,
   FormFieldset,
   FormInput,
@@ -48,7 +48,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
     >
       <Head title="Reset password" />
 
-      <FormContainer onSubmit={submit}>
+      <Form onSubmit={submit}>
         <FormFieldset className="my-4">
           <FormField name="email" label="Email" error={errors.email}>
             <FormInput
@@ -94,7 +94,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
           {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
           Reset password
         </Button>
-      </FormContainer>
+      </Form>
     </AuthLayout>
   );
 }

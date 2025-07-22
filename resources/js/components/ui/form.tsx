@@ -19,27 +19,27 @@ import { CheckIcon, Eye, EyeClosed } from 'lucide-react';
 import { Slot } from '@radix-ui/react-slot';
 import { cn } from '@/lib/utils.ts';
 
-interface FormContextValue {
+interface FormContext {
     disabled?: boolean;
 }
 
-const FormContext = createContext<FormContextValue | undefined>(undefined);
+const FormContext = createContext<FormContext | undefined>(undefined);
 
-const useFormContext = () => {
+const useForm = () => {
     return useContext(FormContext) || {};
 };
 
-interface FormContainerProps extends ComponentProps<'form'> {
+interface FormProps extends ComponentProps<'form'> {
     disabled?: boolean;
 }
 
-function FormContainer({
-                           className,
-                           children,
-                           disabled,
-                           ref,
-                           ...props
-                       }: FormContainerProps) {
+function Form({
+                  className,
+                  children,
+                  disabled = false,
+                  ref,
+                  ...props
+              }: FormProps) {
     return (
         <FormContext.Provider value={{ disabled }}>
             <form
@@ -230,7 +230,7 @@ const FormPasswordInput = memo(function FormPasswordInput({
                                                               'aria-invalid': ariaInvalid,
                                                               'aria-describedby': ariaDescribedBy
                                                           }: FormPasswordInputProps) {
-    const { disabled: contextDisabled } = useFormContext();
+    const { disabled: contextDisabled } = useForm();
     const isDisabled = propDisabled ?? contextDisabled;
     return (
         <PasswordToggleFieldPrimitive.PasswordToggleField>
@@ -290,7 +290,7 @@ const FormInput = memo(function FormInput(
         disabled: propDisabled,
         ...props
     }: FormInputProps) {
-    const { disabled: contextDisabled } = useFormContext();
+    const { disabled: contextDisabled } = useForm();
     const isDisabled = propDisabled ?? contextDisabled;
 
     return (
@@ -381,7 +381,7 @@ function FormInputError({
 }
 
 export {
-    FormContainer,
+    Form,
     FormFieldset,
     FormControl,
     FormField,
@@ -394,7 +394,7 @@ export {
 };
 
 export type {
-    FormContainerProps,
+    FormProps,
     FormFieldsetProps,
     FormControlProps,
     FormFieldProps,

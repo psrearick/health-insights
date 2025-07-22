@@ -4,8 +4,8 @@ import { FormEventHandler } from 'react';
 
 import Button from '@/components/ui/button';
 import {
+  Form,
   FormCheckbox,
-  FormContainer,
   FormControl,
   FormField,
   FormFieldset,
@@ -51,7 +51,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
     >
       <Head title="Log in" />
 
-      <FormContainer onSubmit={submit}>
+      <Form onSubmit={submit}>
         <FormFieldset className="my-4">
           <FormField
             name="email"
@@ -135,7 +135,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
             Sign up
           </TextLink>
         </div>
-      </FormContainer>
+      </Form>
 
       {status && (
         <div className="mb-4 text-center text-sm font-medium text-primary-6">

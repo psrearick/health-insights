@@ -1,9 +1,11 @@
 import Logo from '@/components/logo.tsx';
 import PublicLayout from '@/layouts/public-layout.tsx';
+import { Head } from '@inertiajs/react';
 
 export default function Home() {
   return (
-    <PublicLayout title="Home">
+    <PublicLayout>
+      <Head title="Home" />
       <div className="flex flex-1 items-center justify-center opacity-100 transition-opacity duration-750 starting:opacity-0">
         <main className="w-full max-w-xs lg:max-w-4xl lg:flex-row">
           <div className="flex items-center justify-center py-8">
