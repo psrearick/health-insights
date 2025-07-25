@@ -20,31 +20,51 @@ const logoIconVariants = cva(
   }
 );
 
-const logoTextVariants = cva('flex flex-1 text-left', {
-  variants: {
-    size: {
-      default: 'text-xl',
-      sm: 'text-lg',
-      md: 'text-xl',
-      lg: 'text-5xl',
+const logoTextVariants = cva(
+  'flex flex-1 text-left transition-[width] duration-300 ease-linear',
+  {
+    variants: {
+      size: {
+        default: 'text-xl',
+        sm: 'text-lg',
+        md: 'text-xl',
+        lg: 'text-5xl',
+      },
     },
-  },
-  defaultVariants: {
-    size: 'default',
-  },
-});
+    defaultVariants: {
+      size: 'default',
+    },
+  }
+);
 
 type logoType = ComponentProps<'div'> &
   VariantProps<typeof logoIconVariants> &
-  VariantProps<typeof logoTextVariants>;
+  VariantProps<typeof logoTextVariants> & {
+    textWidth?: string;
+    hasText?: boolean;
+    textExpanded?: boolean;
+  };
 
-export default function Logo({ className, size, ...props }: logoType) {
+export default function Logo({
+  className,
+  size,
+  hasText = false,
+  textExpanded = true,
+  textWidth = '',
+  ...props
+}: logoType) {
   return (
     <div className={cn('flex items-center', className)} {...props}>
       <div className={cn(logoIconVariants({ size }))}>
         <LogoIcon size="inherit" />
       </div>
-      <div className={cn(logoTextVariants({ size }))}>
+      <div
+        className={cn(
+          logoTextVariants({ size }),
+          hasText ? '' : 'hidden',
+          textExpanded ? textWidth : 'w-0'
+        )}
+      >
         <span className="mb-0.5 truncate leading-tight font-bold text-primary-5">
           Health
         </span>
