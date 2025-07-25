@@ -1,4 +1,4 @@
-import { type BreadcrumbItem, type SharedData } from '@/types';
+import { type SharedData } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
@@ -11,13 +11,6 @@ import { Input } from '@/components-bak/ui/input';
 import { Label } from '@/components-bak/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
-
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: 'Profile settings',
-    href: '/settings/profile',
-  },
-];
 
 type ProfileForm = {
   name: string;
@@ -48,7 +41,7 @@ export default function Profile({
   };
 
   return (
-    <AppLayout breadcrumbs={breadcrumbs}>
+    <AppLayout>
       <Head title="Profile settings" />
 
       <SettingsLayout>

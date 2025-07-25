@@ -1,7 +1,6 @@
 import InputError from '@/components-bak/input-error';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
-import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
@@ -10,13 +9,6 @@ import HeadingSmall from '@/components-bak/heading-small';
 import { Button } from '@/components-bak/ui/button';
 import { Input } from '@/components-bak/ui/input';
 import { Label } from '@/components-bak/ui/label';
-
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: 'Password settings',
-    href: '/settings/password',
-  },
-];
 
 export default function Password() {
   const passwordInput = useRef<HTMLInputElement>(null);
@@ -50,7 +42,7 @@ export default function Password() {
   };
 
   return (
-    <AppLayout breadcrumbs={breadcrumbs}>
+    <AppLayout>
       <Head title="Password settings" />
 
       <SettingsLayout>

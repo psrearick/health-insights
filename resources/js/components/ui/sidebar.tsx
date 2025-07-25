@@ -81,12 +81,23 @@ function SidebarProvider({
                              onExpandedChange,
                              sizes = {}
                          }: SidebarProps) {
-    const [internalExpanded, setInternalExpanded] = useState(defaultExpanded);
+    const getInitialExpanded = () => {
+        if (typeof window === 'undefined') {
+            return defaultExpanded;
+        }
+
+        const stored = localStorage.getItem('sidebar-expanded');
+        return stored !== null ? JSON.parse(stored) : defaultExpanded;
+    };
+
+    const [internalExpanded, setInternalExpanded] = useState(getInitialExpanded);
     const isControlled = controlledExpanded !== undefined;
     const expanded = isControlled ? controlledExpanded : internalExpanded;
     const setExpanded = useCallback((value: boolean) => {
         if (!isControlled) {
             setInternalExpanded(value);
+
+            localStorage.setItem('sidebar-expanded', JSON.stringify(value));
         }
 
         onExpandedChange?.(value);
@@ -200,7 +211,7 @@ function SidebarDivider({ className, ...props }: ComponentProps<'div'>) {
 
     return (
         <div className={cn(className, 'py-4', expanded ? 'px-4' : 'px-2')} {...props}>
-            <div className="border-b-1 border-gray-5" />
+            <div className={expanded ? '' : 'border-b-1 border-gray-5'} />
         </div>
     );
 }
