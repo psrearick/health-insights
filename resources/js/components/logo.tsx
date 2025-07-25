@@ -48,7 +48,7 @@ type logoType = ComponentProps<'div'> &
 export default function Logo({
   className,
   size,
-  hasText = false,
+  hasText = true,
   textExpanded = true,
   textWidth = '',
   ...props

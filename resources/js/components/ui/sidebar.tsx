@@ -16,6 +16,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import Button from '../ui/button';
 
 interface Sizes {
+    sidebarSpacing: number;
+    collapsedSidebarSpacing: number;
     sidebarWidth: string;
     collapsedSidebarWidth: string;
 }
@@ -41,11 +43,35 @@ function useSidebar() {
     return context;
 }
 
+function createSize(defaultSize: number, size?: number): { baseSize: number; size: string; } {
+    const baseSize = size ?? defaultSize;
+    const calculatedSize = `${baseSize / 4}rem`;
+
+    return {
+        baseSize: baseSize,
+        size: calculatedSize
+    };
+}
+
+function createSizes(sizes: Partial<Sizes>): Sizes {
+    const expandedSidebar = createSize(72, sizes.sidebarSpacing);
+    const collapsedSidebar = createSize(16, sizes.collapsedSidebarSpacing);
+
+    const defaultSizes = {
+        sidebarWidth: expandedSidebar.size,
+        sidebarSpacing: expandedSidebar.baseSize,
+        collapsedSidebarWidth: collapsedSidebar.size,
+        collapsedSidebarSpacing: collapsedSidebar.baseSize
+    };
+
+    return { ...defaultSizes, ...sizes };
+}
+
 interface SidebarProps extends ComponentProps<'div'> {
     defaultExpanded?: boolean;
     expanded?: boolean;
     onExpandedChange?: (expanded: boolean) => void;
-    sizes?: Sizes;
+    sizes: Partial<Sizes>;
 }
 
 function SidebarProvider({
@@ -53,10 +79,7 @@ function SidebarProvider({
                              defaultExpanded = true,
                              expanded: controlledExpanded,
                              onExpandedChange,
-                             sizes = {
-                                 sidebarWidth: '',
-                                 collapsedSidebarWidth: ''
-                             }
+                             sizes = {}
                          }: SidebarProps) {
     const [internalExpanded, setInternalExpanded] = useState(defaultExpanded);
     const isControlled = controlledExpanded !== undefined;
@@ -69,12 +92,15 @@ function SidebarProvider({
         onExpandedChange?.(value);
     }, [isControlled, onExpandedChange]);
 
+
     const [openMobile, setOpenMobile] = useState(false);
     const isMobile = useIsMobile();
 
     const toggleSidebar = useCallback(() => {
         return isMobile ? setOpenMobile(open => !open) : setExpanded(!expanded);
     }, [expanded, isMobile, setExpanded]);
+
+    const calculatedSizes = createSizes(sizes);
 
     const contextValue = useMemo<SidebarContext>(
         () => ({
@@ -84,9 +110,9 @@ function SidebarProvider({
             openMobile,
             setOpenMobile,
             toggleSidebar,
-            sizes
+            sizes: calculatedSizes
         }),
-        [expanded, setExpanded, isMobile, openMobile, setOpenMobile, toggleSidebar, sizes]
+        [expanded, setExpanded, isMobile, openMobile, setOpenMobile, toggleSidebar, calculatedSizes]
     );
 
     return (

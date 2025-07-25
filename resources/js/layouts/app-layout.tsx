@@ -19,8 +19,8 @@ export default function AppLayout({
     <AppContainer {...props}>
       <SidebarProvider
         sizes={{
-          sidebarWidth: '17rem',
-          collapsedSidebarWidth: '3rem',
+          sidebarSpacing: 68,
+          collapsedSidebarSpacing: 12,
         }}
       >
         <AppSidebar breadcrumbs={breadcrumbs} />

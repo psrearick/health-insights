@@ -29,6 +29,11 @@ export default function Header() {
             <NavigationMenuItem>
               <NavigationMenuLink to="dashboard">Dashboard</NavigationMenuLink>
             </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink to="logout" method="post">
+                Logout
+              </NavigationMenuLink>
+            </NavigationMenuItem>
           </NavigationMenuList>
         ) : (
           <NavigationMenuList>

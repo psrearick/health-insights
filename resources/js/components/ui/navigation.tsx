@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils.ts';
 import { UrlOptions } from '@/types';
 import { resolveUrl, useIsCurrentRoute } from '@/lib/url.ts';
 import { Link } from '@inertiajs/react';
+import { Method } from '@inertiajs/core';
 
 const {
     Trigger,
@@ -72,6 +73,7 @@ interface NavigationMenuLinkProps extends ComponentProps<typeof NavigationMenuPr
     children?: ReactNode;
     indicator?: boolean;
     className?: string;
+    method?: Method;
 }
 
 function NavigationMenuLink(
@@ -81,12 +83,13 @@ function NavigationMenuLink(
         to,
         isActive,
         indicator = true,
+        method,
         ref,
         ...props
     }: NavigationMenuLinkProps) {
     const href = resolveUrl(to);
     const isActiveUrl = useIsCurrentRoute(to, { exact: false });
-
+    const routeMethod = method ? method : 'get';
     const active = isActive || isActiveUrl;
 
     return (
@@ -94,6 +97,7 @@ function NavigationMenuLink(
             <Link
                 href={href}
                 className={cn('relative hover:text-primary data-active:text-primary', className)}
+                method={routeMethod}
             >
                 {children}
                 {indicator && active && (
