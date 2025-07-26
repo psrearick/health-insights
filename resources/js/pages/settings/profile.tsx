@@ -4,11 +4,11 @@ import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
 import DeleteUser from '@/components-bak/delete-user';
-import HeadingSmall from '@/components-bak/heading-small';
 import InputError from '@/components-bak/input-error';
 import { Button } from '@/components-bak/ui/button';
 import { Input } from '@/components-bak/ui/input';
 import { Label } from '@/components-bak/ui/label';
+import HeadingSmall from '@/components/ui/heading-small';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 

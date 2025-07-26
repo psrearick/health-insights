@@ -10,7 +10,7 @@ interface AppLayoutProps {
 
 export default function AppLayout({ children, ...props }: AppLayoutProps) {
   return (
-    <AppContainer {...props}>
+    <AppContainer {...props} className="bg-gray-3">
       <SidebarProvider
         sizes={{
           sidebarSpacing: 68,
@@ -19,7 +19,9 @@ export default function AppLayout({ children, ...props }: AppLayoutProps) {
       >
         <AppSidebar />
       </SidebarProvider>
-      <AppContent>{children}</AppContent>
+      <AppContent className="m-2 rounded-md bg-background">
+        {children}
+      </AppContent>
     </AppContainer>
   );
 }

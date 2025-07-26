@@ -34,16 +34,18 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
   }
 
   return (
-    <div className="px-4 py-6">
-      <Heading
-        title="Settings"
-        description="Manage your profile and account settings"
-      />
+    <div className="flex h-full flex-col">
+      <div className="px-2">
+        <Heading
+          title="Settings"
+          description="Manage your profile and account settings"
+        />
+      </div>
 
-      <div className="flex flex-col space-y-8 lg:flex-row lg:space-y-0 lg:space-x-12">
-        <aside className="w-full max-w-xl lg:w-48">
+      <div className="flex flex-1 flex-col space-y-8 px-2 py-4 lg:flex-row lg:space-y-0 lg:space-x-12">
+        <aside className="w-full max-w-xl rounded-md bg-gray-2 lg:w-48">
           <NavigationMenu className="flex-col *:w-full" orientation="vertical">
-            <NavigationMenuList className="flex flex-col gap-1 px-2">
+            <NavigationMenuList className="flex flex-col gap-1">
               {sidebarNavItems.map((item, index) => (
                 <NavigationMenuItem className="w-full" key={index}>
                   <Button

@@ -5,7 +5,6 @@ import * as React from 'react';
 
 import { Button } from '@/components-bak/ui/button';
 import { Input } from '@/components-bak/ui/input';
-import { Separator } from '@/components-bak/ui/separator';
 import {
   Sheet,
   SheetContent,
@@ -20,6 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components-bak/ui/tooltip';
+import { Separator } from '@/components/ui/separator';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 

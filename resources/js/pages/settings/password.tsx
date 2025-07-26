@@ -5,10 +5,10 @@ import { Transition } from '@headlessui/react';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
 
-import HeadingSmall from '@/components-bak/heading-small';
 import { Button } from '@/components-bak/ui/button';
 import { Input } from '@/components-bak/ui/input';
 import { Label } from '@/components-bak/ui/label';
+import HeadingSmall from '@/components/ui/heading-small';
 
 export default function Password() {
   const passwordInput = useRef<HTMLInputElement>(null);

@@ -6,7 +6,7 @@ import { DropdownMenu } from 'radix-ui';
 
 export default function AppSidebarFooter() {
   const { auth } = usePage<SharedData>().props;
-  const { sizes, expanded } = useSidebar();
+  const { expanded } = useSidebar();
 
   return (
     <SidebarFooter>
@@ -14,7 +14,7 @@ export default function AppSidebarFooter() {
         <DropdownMenu.DropdownMenuTrigger tabIndex={1} asChild>
           <div className="group/dropdown w-full p-2 focus-visible:outline-none">
             <div
-              className={`flex items-center rounded-md text-gray-8 ring ring-gray-5 group-focus-visible/dropdown:bg-white/10 group-focus-visible/dropdown:text-gray-10 group-focus-visible/dropdown:ring-2 group-focus-visible/dropdown:ring-gray-5 group-aria-expanded/dropdown:bg-muted/50 group-aria-expanded/dropdown:text-gray-10 group-aria-expanded/dropdown:ring-2 group-aria-expanded/dropdown:ring-gray-5 hover:cursor-pointer hover:bg-white/10 hover:text-gray-10 hover:ring-2 hover:ring-gray-5 ${expanded ? 'justify-between p-2.5' : 'justify-center p-1'}`}
+              className={`flex items-center rounded-md text-gray-8 group-focus-visible/dropdown:bg-gray-4 group-focus-visible/dropdown:text-gray-10 group-aria-expanded/dropdown:bg-gray-4 group-aria-expanded/dropdown:text-gray-10 hover:cursor-pointer hover:bg-gray-4 hover:text-gray-10 ${expanded ? 'justify-between p-2.5' : 'justify-center p-1'}`}
             >
               <div className="flex items-center gap-2">
                 <UserRound className={`${expanded ? 'size-6' : 'size-5'}`} />
@@ -27,11 +27,13 @@ export default function AppSidebarFooter() {
           </div>
         </DropdownMenu.DropdownMenuTrigger>
         <DropdownMenu.Portal>
-          <DropdownMenu.Content className={`w-[${sizes.sidebarWidth}] px-2`}>
-            <div className="rounded-md border-2 border-gray-4 bg-muted/50 p-1">
+          <DropdownMenu.Content
+            className={`${expanded ? 'w-(--radix-dropdown-menu-trigger-width)' : ''}`}
+          >
+            <div className="rounded-md bg-gray-4 p-1">
               <DropdownMenu.Item asChild>
                 <Link
-                  href="/settings"
+                  href={route('profile.edit')}
                   as="button"
                   className="w-full cursor-pointer rounded-md px-2 py-1 text-left hover:bg-gray-1 hover:outline-none focus:bg-gray-1 focus-visible:outline-none"
                 >
@@ -40,7 +42,7 @@ export default function AppSidebarFooter() {
               </DropdownMenu.Item>
               <DropdownMenu.Item asChild>
                 <Link
-                  href="/logout"
+                  href={route('logout')}
                   method="post"
                   as="button"
                   className="w-full cursor-pointer rounded-md px-2 py-1 text-left hover:bg-gray-1 hover:outline-none focus:bg-gray-1 focus-visible:outline-none"

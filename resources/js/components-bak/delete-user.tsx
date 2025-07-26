@@ -6,7 +6,7 @@ import { Button } from '@/components-bak/ui/button';
 import { Input } from '@/components-bak/ui/input';
 import { Label } from '@/components-bak/ui/label';
 
-import HeadingSmall from '@/components-bak/heading-small';
+import HeadingSmall from '@/components/ui/heading-small';
 
 import {
   Dialog,

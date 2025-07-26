@@ -36,7 +36,7 @@
     --color-secondary-foreground: var(--color-foreground);
 
     --color-muted: var(--color-gray-4);
-    --color-muted-foreground: var(--color-gray-6);
+    --color-muted-foreground: var(--color-gray-9);
 
     --color-accent: var(--color-gray-4);
     --color-accent-foreground: var(--color-foreground);
