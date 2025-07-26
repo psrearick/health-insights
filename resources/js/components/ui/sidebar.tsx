@@ -152,7 +152,7 @@ function Sidebar({ className, children, ...props }: ComponentProps<'div'>) {
             aria-label="Sidebar navigation"
             aria-expanded={expanded}
             data-state={openMobile ? 'open' : 'closed'}
-            className={cn('h-full flex flex-col bg-gray-2 overflow-y-auto w-[var(--sidebar-width-collapsed)] aria-expanded:w-[var(--sidebar-width)]', className)}
+            className={cn('h-full flex flex-col bg-gray-3 overflow-y-auto w-[var(--sidebar-width-collapsed)] aria-expanded:w-[var(--sidebar-width)]', className)}
             {...props}
         >
             {children}

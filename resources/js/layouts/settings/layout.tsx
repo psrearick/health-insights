@@ -1,9 +1,13 @@
-import Heading from '@/components-bak/heading';
-import { Button } from '@/components-bak/ui/button';
-import { Separator } from '@/components-bak/ui/separator';
-import { cn } from '@/lib/utils';
+import Button from '@/components/ui/button';
+import Heading from '@/components/ui/heading';
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from '@/components/ui/navigation.tsx';
+import { Separator } from '@/components/ui/separator';
 import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
 import { type PropsWithChildren } from 'react';
 
 const sidebarNavItems: NavItem[] = [
@@ -25,12 +29,9 @@ const sidebarNavItems: NavItem[] = [
 ];
 
 export default function SettingsLayout({ children }: PropsWithChildren) {
-  // When server-side rendering, we only render the layout on the client...
   if (typeof window === 'undefined') {
     return null;
   }
-
-  const currentPath = window.location.pathname;
 
   return (
     <div className="px-4 py-6">
@@ -41,23 +42,28 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
 
       <div className="flex flex-col space-y-8 lg:flex-row lg:space-y-0 lg:space-x-12">
         <aside className="w-full max-w-xl lg:w-48">
-          <nav className="flex flex-col space-y-1 space-x-0">
-            {sidebarNavItems.map((item, index) => (
-              <Button
-                key={`${item.href}-${index}`}
-                size="sm"
-                variant="ghost"
-                asChild
-                className={cn('w-full justify-start', {
-                  'bg-muted': currentPath === item.href,
-                })}
-              >
-                <Link href={item.href} prefetch>
-                  {item.title}
-                </Link>
-              </Button>
-            ))}
-          </nav>
+          <NavigationMenu className="flex-col *:w-full" orientation="vertical">
+            <NavigationMenuList className="flex flex-col gap-1 px-2">
+              {sidebarNavItems.map((item, index) => (
+                <NavigationMenuItem className="w-full" key={index}>
+                  <Button
+                    className="w-full justify-start hover:bg-primary-4 hover:text-bw-foreground data-active:bg-primary-3 data-active:text-bw-foreground"
+                    variant="ghost"
+                    size="sm"
+                    asChild
+                  >
+                    <NavigationMenuLink
+                      to={item.href}
+                      prefetch
+                      indicator={false}
+                    >
+                      {item.title}
+                    </NavigationMenuLink>
+                  </Button>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
         </aside>
 
         <Separator className="my-6 md:hidden" />

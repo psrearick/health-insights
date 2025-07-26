@@ -26,10 +26,10 @@ export default function AppSidebar() {
       <SidebarDivider />
       <SidebarContent>
         <NavigationMenu className="flex-col *:w-full" orientation="vertical">
-          <NavigationMenuList className="flex flex-col gap-0 px-1 group-data-[expanded=true]/side:px-2">
+          <NavigationMenuList className="flex flex-col gap-1 px-1 group-data-[expanded=true]/side:px-2">
             <NavigationMenuItem asChild>
               <NavigationMenuLink
-                className="flex w-full gap-4 rounded-md p-2 text-gray-7 hover:bg-gray-1 hover:text-white data-active:bg-gray-1 data-active:text-gray-10 data-active:hover:text-white"
+                className="flex w-full gap-4 rounded-md p-2 text-gray-7 hover:bg-gray-1 hover:text-gray-10 data-active:bg-gray-1 data-active:text-gray-10 data-active:hover:text-gray-10"
                 indicator={false}
                 to="dashboard"
               >
@@ -41,7 +41,7 @@ export default function AppSidebar() {
             </NavigationMenuItem>
             <NavigationMenuItem asChild>
               <NavigationMenuLink
-                className="flex w-full gap-4 rounded-md p-2 text-gray-7 hover:bg-gray-1 hover:text-white data-active:bg-gray-1 data-active:text-gray-10 data-active:hover:text-white"
+                className="flex w-full gap-4 rounded-md p-2 text-gray-7 hover:bg-gray-1 hover:text-gray-10 data-active:bg-gray-1 data-active:text-gray-10 data-active:hover:text-gray-10"
                 indicator={false}
                 to="/settings"
               >

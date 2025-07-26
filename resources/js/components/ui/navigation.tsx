@@ -74,6 +74,7 @@ interface NavigationMenuLinkProps extends ComponentProps<typeof NavigationMenuPr
     indicator?: boolean;
     className?: string;
     method?: Method;
+    prefetch?: boolean;
 }
 
 function NavigationMenuLink(
@@ -84,6 +85,7 @@ function NavigationMenuLink(
         isActive,
         indicator = true,
         method,
+        prefetch,
         ref,
         ...props
     }: NavigationMenuLinkProps) {
@@ -98,6 +100,7 @@ function NavigationMenuLink(
                 href={href}
                 className={cn('relative hover:text-primary data-active:text-primary', className)}
                 method={routeMethod}
+                prefetch={!!prefetch}
             >
                 {children}
                 {indicator && active && (
