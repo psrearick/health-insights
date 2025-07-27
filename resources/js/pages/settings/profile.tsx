@@ -3,7 +3,7 @@ import { Transition } from '@headlessui/react';
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
 
-import DeleteUser from '@/components/delete-user';
+import DeleteUser from '@/components/settings/delete-user.tsx';
 import Button from '@/components/ui/button';
 import {
   Form,

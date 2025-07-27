@@ -44,7 +44,7 @@ export default function Register() {
       <Head title="Register" />
 
       <Form onSubmit={submit}>
-        <FormFieldset className="my-4">
+        <FormFieldset className="my-4 space-y-4">
           <FormField name="name" label="Name" error={errors.name} required>
             <FormInput
               autoComplete="name"

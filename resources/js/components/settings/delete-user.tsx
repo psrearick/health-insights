@@ -1,14 +1,14 @@
 import { useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
 
-import Button from '@/components/ui/button';
+import Button from '@/components/ui/button.tsx';
 import {
   Form,
   FormField,
   FormFieldset,
   FormInput,
 } from '@/components/ui/form.tsx';
-import HeadingSmall from '@/components/ui/heading-small';
+import HeadingSmall from '@/components/ui/heading-small.tsx';
 
 import {
   Dialog,
@@ -18,7 +18,7 @@ import {
   DialogFooter,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from '@/components/ui/dialog.tsx';
 
 export default function DeleteUser() {
   const passwordInput = useRef<HTMLInputElement>(null);

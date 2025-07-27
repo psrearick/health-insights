@@ -52,7 +52,7 @@ export default function Login({ status, canResetPassword }: LoginProps) {
       <Head title="Log in" />
 
       <Form onSubmit={submit}>
-        <FormFieldset className="my-4">
+        <FormFieldset className="my-4 space-y-4">
           <FormField
             name="email"
             label="Email Address"

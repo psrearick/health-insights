@@ -49,7 +49,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
       <Head title="Reset password" />
 
       <Form onSubmit={submit}>
-        <FormFieldset className="my-4">
+        <FormFieldset className="my-4 space-y-4">
           <FormField name="email" label="Email" error={errors.email}>
             <FormInput
               type="email"

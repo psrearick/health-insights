@@ -24,8 +24,8 @@ export default function AuthLayout({
           <X className="hover:text-primary" />
         </Link>
       </div>
-      <div className="flex flex-col items-center justify-center gap-6 bg-background">
-        <div className="w-full max-w-sm">
+      <div className="flex w-full flex-col items-center justify-center gap-6 bg-background">
+        <div className="w-full max-w-md">
           <div className="flex flex-col gap-8">
             <div className="flex flex-col items-center gap-4">
               <Link

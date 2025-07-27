@@ -1,6 +1,6 @@
 import { Head } from '@inertiajs/react';
 
-import AppearanceTabs from '@/components/appearance-tabs';
+import AppearanceTabs from '@/components/settings/appearance-tabs.tsx';
 import HeadingSmall from '@/components/ui/heading-small';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
