@@ -24,10 +24,10 @@
     --color-popover: var(--color-background);
     --color-popover-foreground: var(--color-foreground);
 
-    --color-primary: var(--color-primary-6);
+    --color-primary: var(--color-emerald-500);
     --color-primary-foreground: var(--color-black);
-    --color-primary-accent: var(--color-primary-5);
-    --color-primary-accent-foreground: var(--color-primary-1);
+    --color-primary-accent: var(--color-emerald-600);
+    --color-primary-accent-foreground: var(--color-black);
 
     --color-primary-lighter: var(--color-primary-3);
     --color-primary-darker: var(--color-primary-9);
@@ -41,12 +41,11 @@
     --color-accent: var(--color-gray-4);
     --color-accent-foreground: var(--color-foreground);
 
-    --color-destructive: var(--color-destructive);
-    --color-destructive-foreground: var(--color-destructive-foreground);
-    --color-destructive-accent: var(--color-destructive-accent);
-    --color-destructive-accent-foreground: var(
-        --color-destructive-accent-foreground
-    );
+    --color-destructive: var(--color-red-500);
+    --color-destructive-foreground: var(--color-black);
+
+    --color-destructive-accent: oklch(from var(--color-red-500) 60.3% c h);
+    --color-destructive-accent-foreground: var(--color-black);
 
     --color-border: var(--color-gray-4);
     --color-input: var(--color-gray-10);
@@ -120,11 +119,6 @@
     --color-bw-background: var(--color-white);
     --color-bw-foreground: var(--color-black);
 
-    --color-destructive: var(--color-red-600);
-    --color-destructive-foreground: var(--color-white);
-    --color-destructive-accent: var(--color-red-500);
-    --color-destructive-accent-foreground: var(--color-black);
-
     --color-gray-1: var(--color-gray-50);
     --color-gray-2: var(--color-gray-100);
     --color-gray-3: var(--color-gray-200);
@@ -165,11 +159,6 @@
 .dark {
     --color-bw-background: var(--color-black);
     --color-bw-foreground: var(--color-white);
-
-    --color-destructive: var(--color-red-500);
-    --color-destructive-foreground: var(--color-black);
-    --color-destructive-accent: var(--color-red-600);
-    --color-destructive-accent-foreground: var(--color-white);
 
     --color-gray-1: var(--color-gray-950);
     --color-gray-2: var(--color-gray-900);

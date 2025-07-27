@@ -43,7 +43,7 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
       </div>
 
       <div className="flex flex-1 flex-col space-y-8 px-2 py-4 lg:flex-row lg:space-y-0 lg:space-x-12">
-        <aside className="w-full max-w-xl rounded-md bg-gray-2 lg:w-48">
+        <aside className="w-full max-w-xl rounded-md bg-gray-2 px-2 lg:w-48">
           <NavigationMenu className="flex-col *:w-full" orientation="vertical">
             <NavigationMenuList className="flex flex-col gap-1">
               {sidebarNavItems.map((item, index) => (
