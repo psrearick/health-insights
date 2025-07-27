@@ -1,4 +1,5 @@
 import AuthLayoutTemplate from '@/layouts/auth/auth-layout';
+import { ReactNode } from 'react';
 
 export default function AuthLayout({
   children,
@@ -6,7 +7,7 @@ export default function AuthLayout({
   description,
   ...props
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   title: string;
   description: string;
 }) {

@@ -1,22 +1,16 @@
-import InputError from '@/components/input-error';
+import Button from '@/components/ui/button';
+import {
+  Form,
+  FormField,
+  FormFieldset,
+  FormInput,
+} from '@/components/ui/form.tsx';
+import HeadingSmall from '@/components/ui/heading-small';
 import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
-import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
-
-import HeadingSmall from '@/components/heading-small';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: 'Password settings',
-    href: '/settings/password',
-  },
-];
 
 export default function Password() {
   const passwordInput = useRef<HTMLInputElement>(null);
@@ -50,7 +44,7 @@ export default function Password() {
   };
 
   return (
-    <AppLayout breadcrumbs={breadcrumbs}>
+    <AppLayout>
       <Head title="Password settings" />
 
       <SettingsLayout>
@@ -60,56 +54,54 @@ export default function Password() {
             description="Ensure your account is using a long, random password to stay secure"
           />
 
-          <form onSubmit={updatePassword} className="space-y-6">
-            <div className="grid gap-2">
-              <Label htmlFor="current_password">Current password</Label>
+          <Form onSubmit={updatePassword} className="space-y-6">
+            <FormFieldset>
+              <FormField
+                name="current_password"
+                label="Current Password"
+                error={errors.current_password}
+              >
+                <FormInput
+                  ref={currentPasswordInput}
+                  value={data.current_password}
+                  onChange={e => setData('current_password', e.target.value)}
+                  type="password"
+                  autoComplete="current-password"
+                  placeholder="Current password"
+                />
+              </FormField>
 
-              <Input
-                id="current_password"
-                ref={currentPasswordInput}
-                value={data.current_password}
-                onChange={e => setData('current_password', e.target.value)}
-                type="password"
-                className="mt-1 block w-full"
-                autoComplete="current-password"
-                placeholder="Current password"
-              />
+              <FormField
+                name="password"
+                label="New Password"
+                error={errors.password}
+              >
+                <FormInput
+                  ref={passwordInput}
+                  value={data.password}
+                  onChange={e => setData('password', e.target.value)}
+                  type="password"
+                  autoComplete="new-password"
+                  placeholder="New password"
+                />
+              </FormField>
 
-              <InputError message={errors.current_password} />
-            </div>
-
-            <div className="grid gap-2">
-              <Label htmlFor="password">New password</Label>
-
-              <Input
-                id="password"
-                ref={passwordInput}
-                value={data.password}
-                onChange={e => setData('password', e.target.value)}
-                type="password"
-                className="mt-1 block w-full"
-                autoComplete="new-password"
-                placeholder="New password"
-              />
-
-              <InputError message={errors.password} />
-            </div>
-
-            <div className="grid gap-2">
-              <Label htmlFor="password_confirmation">Confirm password</Label>
-
-              <Input
-                id="password_confirmation"
-                value={data.password_confirmation}
-                onChange={e => setData('password_confirmation', e.target.value)}
-                type="password"
-                className="mt-1 block w-full"
-                autoComplete="new-password"
-                placeholder="Confirm password"
-              />
-
-              <InputError message={errors.password_confirmation} />
-            </div>
+              <FormField
+                name="password_confirmation"
+                label="Confirm Password"
+                error={errors.password_confirmation}
+              >
+                <FormInput
+                  value={data.password_confirmation}
+                  onChange={e =>
+                    setData('password_confirmation', e.target.value)
+                  }
+                  type="password"
+                  autoComplete="new-password"
+                  placeholder="Confirm password"
+                />
+              </FormField>
+            </FormFieldset>
 
             <div className="flex items-center gap-4">
               <Button disabled={processing}>Save password</Button>
@@ -124,7 +116,7 @@ export default function Password() {
                 <p className="text-sm text-neutral-600">Saved</p>
               </Transition>
             </div>
-          </form>
+          </Form>
         </div>
       </SettingsLayout>
     </AppLayout>

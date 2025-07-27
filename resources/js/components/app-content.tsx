@@ -1,25 +1,16 @@
-import { SidebarInset } from '@/components/ui/sidebar';
-import * as React from 'react';
+import { cn } from '@/lib/utils.ts';
+import { ReactNode } from 'react';
 
-interface AppContentProps extends React.ComponentProps<'main'> {
-  variant?: 'header' | 'sidebar';
-}
-
-export function AppContent({
-  variant = 'header',
+export default function AppContent({
   children,
-  ...props
-}: AppContentProps) {
-  if (variant === 'sidebar') {
-    return <SidebarInset {...props}>{children}</SidebarInset>;
-  }
-
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <main
-      className="mx-auto flex h-full w-full max-w-7xl flex-1 flex-col gap-4 rounded-xl"
-      {...props}
-    >
+    <div className={cn('flex-1 gap-4 overflow-x-auto p-4', className)}>
       {children}
-    </main>
+    </div>
   );
 }

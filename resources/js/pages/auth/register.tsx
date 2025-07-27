@@ -1,13 +1,16 @@
+import Button from '@/components/ui/button';
+import {
+  Form,
+  FormField,
+  FormFieldset,
+  FormInput,
+  FormPasswordInput,
+} from '@/components/ui/form';
+import TextLink from '@/components/ui/text-link.tsx';
+import AuthLayout from '@/layouts/auth-layout';
 import { Head, useForm } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 import { FormEventHandler } from 'react';
-
-import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
 
 type RegisterForm = {
   name: string;
@@ -39,31 +42,24 @@ export default function Register() {
       description="Enter your details below to create your account"
     >
       <Head title="Register" />
-      <form className="flex flex-col gap-6" onSubmit={submit}>
-        <div className="grid gap-6">
-          <div className="grid gap-2">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              type="text"
-              required
+
+      <Form onSubmit={submit}>
+        <FormFieldset className="my-4 space-y-4">
+          <FormField name="name" label="Name" error={errors.name} required>
+            <FormInput
+              autoComplete="name"
               autoFocus
               tabIndex={1}
-              autoComplete="name"
               value={data.name}
               onChange={e => setData('name', e.target.value)}
               disabled={processing}
               placeholder="Full name"
             />
-            <InputError message={errors.name} className="mt-2" />
-          </div>
+          </FormField>
 
-          <div className="grid gap-2">
-            <Label htmlFor="email">Email address</Label>
-            <Input
-              id="email"
+          <FormField name="email" label="Email" error={errors.email} required>
+            <FormInput
               type="email"
-              required
               tabIndex={2}
               autoComplete="email"
               value={data.email}
@@ -71,15 +67,15 @@ export default function Register() {
               disabled={processing}
               placeholder="email@example.com"
             />
-            <InputError message={errors.email} />
-          </div>
+          </FormField>
 
-          <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              required
+          <FormField
+            name="password"
+            label="Password"
+            error={errors.password}
+            required
+          >
+            <FormPasswordInput
               tabIndex={3}
               autoComplete="new-password"
               value={data.password}
@@ -87,15 +83,15 @@ export default function Register() {
               disabled={processing}
               placeholder="Password"
             />
-            <InputError message={errors.password} />
-          </div>
+          </FormField>
 
-          <div className="grid gap-2">
-            <Label htmlFor="password_confirmation">Confirm password</Label>
-            <Input
-              id="password_confirmation"
-              type="password"
-              required
+          <FormField
+            name="password_confirmation"
+            label="Confirm Password"
+            error={errors.password_confirmation}
+            required
+          >
+            <FormPasswordInput
               tabIndex={4}
               autoComplete="new-password"
               value={data.password_confirmation}
@@ -103,19 +99,18 @@ export default function Register() {
               disabled={processing}
               placeholder="Confirm password"
             />
-            <InputError message={errors.password_confirmation} />
-          </div>
+          </FormField>
+        </FormFieldset>
 
-          <Button
-            type="submit"
-            className="mt-2 w-full"
-            tabIndex={5}
-            disabled={processing}
-          >
-            {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
-            Create account
-          </Button>
-        </div>
+        <Button
+          type="submit"
+          className="my-4 w-full"
+          tabIndex={5}
+          disabled={processing}
+        >
+          {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+          Create account
+        </Button>
 
         <div className="text-center text-sm text-muted-foreground">
           Already have an account?{' '}
@@ -123,7 +118,7 @@ export default function Register() {
             Log in
           </TextLink>
         </div>
-      </form>
+      </Form>
     </AuthLayout>
   );
 }

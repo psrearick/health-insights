@@ -1,18 +1,31 @@
-import { Breadcrumbs } from '@/components/breadcrumbs';
-import { SidebarTrigger } from '@/components/ui/sidebar';
-import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
+import Logo from '@/components/logo.tsx';
+import {
+  SidebarHeader,
+  SidebarTrigger,
+  useSidebar,
+} from '@/components/ui/sidebar.tsx';
+import { cn } from '@/lib/utils.ts';
+import { Link } from '@inertiajs/react';
 
-export function AppSidebarHeader({
-  breadcrumbs = [],
-}: {
-  breadcrumbs?: BreadcrumbItemType[];
-}) {
+export default function AppSidebarHeader() {
+  const { expanded } = useSidebar();
   return (
-    <header className="flex h-16 shrink-0 items-center gap-2 border-b border-sidebar-border/50 px-6 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 md:px-4">
-      <div className="flex items-center gap-2">
-        <SidebarTrigger className="-ml-1" />
-        <Breadcrumbs breadcrumbs={breadcrumbs} />
-      </div>
-    </header>
+    <div className="h-[calc(var(--sidebar-width-collapsed)*2)]">
+      <SidebarHeader
+        className={cn(
+          'flex flex-col items-center justify-between gap-4 p-2 group-aria-expanded/side:flex-row-reverse'
+        )}
+      >
+        <SidebarTrigger />
+        <Link href={route('dashboard')} prefetch>
+          <Logo
+            size="sm"
+            textExpanded={expanded}
+            hasText={true}
+            textWidth="w-[calc(var(--sidebar-width)*0.66)]"
+          />
+        </Link>
+      </SidebarHeader>
+    </div>
   );
 }

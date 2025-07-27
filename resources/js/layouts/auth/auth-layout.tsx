@@ -1,4 +1,4 @@
-import AppLogoIcon from '@/components/app-logo-icon';
+import { LogoIcon } from '@/components/logo-icon.tsx';
 import { Link } from '@inertiajs/react';
 import { X } from 'lucide-react';
 import { type PropsWithChildren } from 'react';
@@ -15,8 +15,8 @@ export default function AuthLayout({
   description,
 }: PropsWithChildren<AuthLayoutProps>) {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-between">
-      <div className="flex w-full flex-row-reverse py-6 pr-6">
+    <div className="flex min-h-svh flex-col items-center justify-center">
+      <div className="absolute top-0 flex w-full flex-row-reverse py-6 pr-6">
         <Link
           href={route('home')}
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary"
@@ -24,17 +24,15 @@ export default function AuthLayout({
           <X className="hover:text-primary" />
         </Link>
       </div>
-      <div className="flex flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
-        <div className="w-full max-w-sm">
+      <div className="flex w-full flex-col items-center justify-center gap-6 bg-background">
+        <div className="w-full max-w-md">
           <div className="flex flex-col gap-8">
             <div className="flex flex-col items-center gap-4">
               <Link
                 href={route('home')}
                 className="flex flex-col items-center gap-2 font-medium"
               >
-                <div className="mb-1 flex h-9 w-9 items-center justify-center rounded-md">
-                  <AppLogoIcon className="size-9 fill-primary text-primary" />
-                </div>
+                <LogoIcon size="md" className="mb-2" />
                 <span className="sr-only">{title}</span>
               </Link>
 
@@ -49,7 +47,6 @@ export default function AuthLayout({
           </div>
         </div>
       </div>
-      <div className="h-20 w-full" />
     </div>
   );
 }
